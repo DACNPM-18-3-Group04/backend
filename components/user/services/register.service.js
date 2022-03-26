@@ -2,6 +2,7 @@ const UserModel = require('../user.model');
 const { handle, isEmpty, clientLink } = require('../../../utils/helpers');
 const { hashPassword } = require('../../../utils/auth');
 const AccountTypes = require('../../../configs/constants/accountType');
+const AccountStatus = require('../../../configs/constants/accountStatus');
 const TEMPLATE_TYPES = require('../../../configs/nodemailer/mail_template.config').TEMPLATE_TYPES;
 const genOneTimeCode = require('./genOneTimeCode.service');
 const MailService = require('../../email/email.service');
@@ -71,7 +72,8 @@ const handleRegister = async (params) => {
     fullname: params.fullname || params.email,
     contact_email: params.email,
     contact_number: params.contact_number || '',
-    account_type: AccountTypes.INACTIVATED,
+    account_type: AccountTypes.NORMAL,
+    status: AccountStatus.INACTIVATED,
     token: ot_code,
   };
 

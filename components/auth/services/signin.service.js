@@ -3,7 +3,7 @@ const UserModel = require('../../user/user.model');
 const { handle, isEmpty } = require('../../../utils/helpers');
 const { matchPasswordHash } = require('../../../utils/auth');
 const { jwtOptions } = require('../../../configs/passport');
-const AccountTypes = require('../../../configs/constants/accountType');
+const AccountStatus = require('../../../configs/constants/accountStatus');
 
 const handleSignIn = async (params) => {
   // Validate email
@@ -41,11 +41,8 @@ const handleSignIn = async (params) => {
   }
 
   // Check active user
-  if (user.account_type === AccountTypes.INACTIVATED) {
+  if (user.status === AccountStatus.INACTIVATED) {
     throw new Error('Tải khoản chưa được kích hoạt');
-  }
-  if (user.account_type === AccountTypes.DISABLED) {
-      throw new Error('Tải khoản bạn đã bị khóa');
   }
 
   if (!matchPasswordHash(params.password, user.password)) {
@@ -56,6 +53,7 @@ const handleSignIn = async (params) => {
     id: user.id,
     email: user.email,
     account_type: user.account_type,
+    status: user.status,
   };
   let token = jwt.sign(payload, jwtOptions.secretOrKey);
 

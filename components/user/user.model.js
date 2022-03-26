@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../../configs/database');
+const AccountStatus = require('../../configs/constants/accountStatus');
 
 const User = db.define('user', {
   id: {
@@ -33,6 +34,10 @@ const User = db.define('user', {
   token: {
     type: Sequelize.DataTypes.STRING(24),
   },
+  status: {
+    type: Sequelize.DataTypes.STRING(2),
+    defaultValue: AccountStatus.DEFAULT,
+  }
 });
 
 User.sync({ alter: true })
