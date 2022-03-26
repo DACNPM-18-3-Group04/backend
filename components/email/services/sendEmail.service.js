@@ -1,5 +1,8 @@
 const { handle, isEmpty } = require('../../../utils/helpers');
-const { isValidMailContent, getMailInfomation } = require('../../../configs/nodemailer/mail_template.config');
+const {
+  isValidMailContent,
+  getMailInfomation,
+} = require('../../../configs/nodemailer/mail_template.config');
 const transporter = require('../../../configs/nodemailer/nodemailer');
 
 async function sendEmail(params) {
@@ -12,7 +15,7 @@ async function sendEmail(params) {
   }
 
   if (isEmpty(params.content)) {
-    throw new Error('Vui lòng truyền email');
+    throw new Error('Vui lòng truyền nội dung email');
   }
 
   if (!isValidMailContent(params.type, params.content)) {
@@ -32,3 +35,5 @@ async function sendEmail(params) {
     message: 'Gửi email thành công',
   };
 }
+
+module.exports = sendEmail;

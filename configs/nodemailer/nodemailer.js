@@ -12,8 +12,8 @@ const transporter = nodemailer.createTransport({
     user: mailConfig.username,
     clientId: mailConfig.clientId,
     clientSecret: mailConfig.clientSecret,
-    refreshToken: mailConfig.refreshToken
-  }
+    refreshToken: mailConfig.refreshToken,
+  },
 });
 
 transporter.use('compile', hbs(hbsOptions));

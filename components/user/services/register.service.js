@@ -1,7 +1,10 @@
 const UserModel = require('../user.model');
-const { handle, isEmpty } = require('../../../utils/helpers');
+const { handle, isEmpty, clientLink } = require('../../../utils/helpers');
 const { hashPassword } = require('../../../utils/auth');
 const AccountTypes = require('../../../configs/constants/accountType');
+const TEMPLATE_TYPES = require('../../../configs/nodemailer/mail_template.config').TEMPLATE_TYPES;
+const genOneTimeCode = require('./genOneTimeCode.service');
+const MailService = require('../../email/email.service');
 
 const handleRegister = async (params) => {
   // Validate email
@@ -37,6 +40,29 @@ const handleRegister = async (params) => {
     );
   }
 
+  // Generate one time used code
+  let [ot_code, err_ot_code] = await handle(genOneTimeCode());
+  if (err_ot_code) {
+    console.log(err_ot_code);
+    throw err_ot_code;
+  } 
+
+  // Send email
+  let params_email = {
+    type: TEMPLATE_TYPES.USER_ACTIVATION,
+    email: params.email,
+    content: {
+      activation_link: clientLink.genActivationLink(ot_code),
+    },
+  };
+  let [send_email, send_email_err] = await handle(
+    MailService.sendMail(params_email)
+  );
+  if (send_email_err) {
+    console.log(send_email_err);
+    throw send_email_err;
+  } 
+
   const passwordHash = hashPassword(params.password);
 
   let _params_new_users = {
@@ -45,7 +71,8 @@ const handleRegister = async (params) => {
     fullname: params.fullname || params.email,
     contact_email: params.email,
     contact_number: params.contact_number || '',
-    account_type: AccountTypes.DEFAULT,
+    account_type: AccountTypes.INACTIVATED,
+    token: ot_code,
   };
 
   let [new_user, new_user_err] = await handle(
@@ -55,6 +82,7 @@ const handleRegister = async (params) => {
 
   // Format output
   _params_new_users.password = undefined;
+  _params_new_users.token = undefined;
 
   return {
     id: new_user.insertId,

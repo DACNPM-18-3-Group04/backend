@@ -3,11 +3,10 @@ const { isEmpty } = require('../../utils/helpers');
 const config = require('../default.config');
 const { username } = config.smtp_mail;
 
-
 const USER_ACTIVATION = 1;
-const TEMPLATE_TYPES = [
+const TEMPLATE_TYPES = {
   USER_ACTIVATION
-]
+};
 
 // Corresponding template = TEMPLATE[TEMPLATE_TYPE - 1]
 const TEMPLATES = [
@@ -40,8 +39,8 @@ function getMailInfomation(params) {
   return {
     from: username,
     to: params.email,
-    subject: TEMPLATE[params.type - 1].subject,
-    template: TEMPLATE[params.type - 1].template,
+    subject: TEMPLATES[params.type - 1].subject,
+    template: TEMPLATES[params.type - 1].template,
     context: params.content,
   };
 }
@@ -53,4 +52,4 @@ module.exports = {
   hbsOptions,
   isValidMailContent,
   getMailInfomation,
-}
+};

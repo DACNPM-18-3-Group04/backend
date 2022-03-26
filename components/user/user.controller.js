@@ -10,13 +10,14 @@ const handleRegister = (req, res) => {
         message: 'Đăng ký tài khoản thành công',
       }),
     )
-    .catch((err) =>
+    .catch((err) => {
+      console.log(err);
       res.status(400).json({
         success: false,
         data: {},
         message: err.message,
-      }),
-    );
+      })
+    });
 };
 
 module.exports = {
