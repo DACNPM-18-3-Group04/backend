@@ -30,6 +30,9 @@ const User = db.define('user', {
   account_type: {
     type: Sequelize.DataTypes.STRING(3),
   },
+  token: {
+    type: Sequelize.DataTypes.STRING(24),
+  },
 });
 
 User.sync({ alter: true })

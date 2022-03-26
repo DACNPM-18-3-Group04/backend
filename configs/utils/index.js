@@ -1,7 +1,6 @@
 require('dotenv').config(); //Add .env file variable to process.env
+const DefaultMailConfig = require('./mail.default');
 
-const DEFAULT_SMTP_MAIL_USERNAME = '***@gmail.com';
-const DEFAULT_SMTP_MAIL_PASSWORD = '**';
 const DEFAULT_GOOGLE_OAUTH_CLIENT_ID = '*';
 const DEFAULT_CLIENT_HOST = 'localhost:3000';
 
@@ -14,14 +13,6 @@ const DEFAULT_DB_NAME = 'test_db';
 const DEFAULT_DB_USERNAME = 'root';
 const DEFAULT_DB_PASSWORD = 'root';
 // DATABASE
-
-const getSmtpMailUsername = () => {
-  return process.env.SMTP_MAIL_USERNAME || DEFAULT_SMTP_MAIL_USERNAME;
-};
-
-const getSmtpMailPassword = () => {
-  return process.env.SMTP_MAIL_PASSWORD || DEFAULT_SMTP_MAIL_PASSWORD;
-};
 
 const getGoogleOauthClientID = () => {
   return process.env.GOOGLE_OAUTH_CLIENT_ID || DEFAULT_GOOGLE_OAUTH_CLIENT_ID;
@@ -58,8 +49,9 @@ const getDBPassword = () => {
 // DATABASE
 
 module.exports = {
-  getSmtpMailUsername,
-  getSmtpMailPassword,
+  // MAIL
+  ...DefaultMailConfig,
+  // MAIL
   getGoogleOauthClientID,
   getClientHost,
   getSecretKey,

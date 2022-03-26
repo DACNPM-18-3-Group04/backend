@@ -14,9 +14,11 @@ module.exports = {
   },
 
   smtp_mail: {
-    service: 'Gmail',
-    username: DefaultConfig.getSmtpMailUsername(),
-    password: DefaultConfig.getSmtpMailPassword(),
+    service: 'gmail',
+    clientId: DefaultConfig.getMailOAuthClientID(),
+    clientSecret: DefaultConfig.getMailOAuthClientSecret(),
+    refreshToken: DefaultConfig.getMailOAuthRefreshToken(),
+    username: DefaultConfig.getMailUsername(),
   },
 
   oAuthClientID: {
