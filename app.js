@@ -9,7 +9,7 @@ const db = require('./configs/database');
 // Test DB
 db.authenticate()
   .then(() => console.log('Database connected successfully'))
-  .catch((err) => console.log('Database connection error: ' + err));
+  .catch((err) => console.log('Database connection error: ', err));
 
 const ErrorMdw = require('./components/errors/error.middleware');
 const indexRouter = require('./routes/index.route');
