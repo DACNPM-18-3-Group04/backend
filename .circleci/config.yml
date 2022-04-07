@@ -22,7 +22,6 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
       - node/install-packages:
-          cache-path: node_modules
           override-ci-command: npm i
 
 
