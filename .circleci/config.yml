@@ -38,4 +38,4 @@ workflows:
           requires:
             - setup-test
           override-ci-command: npm install
-          test-results-for: mocha
+
