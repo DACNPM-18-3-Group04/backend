@@ -21,8 +21,7 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-      - node/install-packages:
-          override-ci-command: npm i
+      - node/install-packages
 
 
 # Invoke jobs via workflows
