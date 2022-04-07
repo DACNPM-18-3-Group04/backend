@@ -33,5 +33,7 @@ workflows:
     jobs:
       - setup-test
       - node/test:
+          requires:
+            - setup-test
           override-ci-command: npm test
           test-results-for: mocha
