@@ -23,6 +23,9 @@ jobs:
           command: "echo Hello, World!"
       - node/install-packages:
           override-ci-command: npm install
+      - run:
+          name: Test
+          command: npm run test
 
 
 # Invoke jobs via workflows
@@ -34,5 +37,5 @@ workflows:
       - node/test:
           requires:
             - setup-test
-          override-ci-command: npm run test
+          override-ci-command: npm install
           test-results-for: mocha
