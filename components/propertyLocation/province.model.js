@@ -3,18 +3,22 @@ const db = require('../../configs/database');
 
 const tableName = 'province';
 
-const Province = db.define(tableName, { 
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+const Province = db.define(
+  tableName,
+  {
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: Sequelize.STRING(50),
+    },
   },
-  name: {
-    type: Sequelize.STRING(50),
+  {
+    timestamps: false,
   },
-}, {
-  timestamps: false
-});
+);
 
 Province.sync({ alter: true })
   .then(() => {

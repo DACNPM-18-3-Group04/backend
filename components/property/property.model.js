@@ -8,7 +8,7 @@ const PropertyStatus = require('../../configs/constants/property/propertyStatus'
 
 const tableName = 'property';
 
-const Property = db.define(tableName, { 
+const Property = db.define(tableName, {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -32,7 +32,7 @@ const Property = db.define(tableName, {
   address: {
     type: Sequelize.STRING(100),
     allowNull: false,
-    comment: 'Address number, street & ward only'
+    comment: 'Address number, street & ward only',
   },
   type: {
     type: Sequelize.STRING(2),
@@ -44,7 +44,7 @@ const Property = db.define(tableName, {
     references: {
       model: District,
       key: 'id',
-    }
+    },
   },
   author_id: {
     type: Sequelize.INTEGER,
@@ -52,7 +52,7 @@ const Property = db.define(tableName, {
       model: User,
       key: 'id',
     },
-    comment: 'The user who created this'
+    comment: 'The user who created this',
   },
   status: {
     type: Sequelize.STRING(2),

@@ -3,3 +3,5 @@
 
 /public/images
 *.svg
+
+/.circleci

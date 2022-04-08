@@ -5,7 +5,7 @@ const { username } = config.smtp_mail;
 
 const USER_ACTIVATION = 1;
 const TEMPLATE_TYPES = {
-  USER_ACTIVATION
+  USER_ACTIVATION,
 };
 
 // Corresponding template = TEMPLATE[TEMPLATE_TYPE - 1]

@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 describe('The Register API', () => {
   before(function () {
     this.skip(); // Weird test issue
-  })
+  });
 
   beforeEach((done) => {
     //Before each test we empty the database in your case
@@ -27,12 +27,15 @@ describe('The Register API', () => {
    */
   describe('/register fail ', () => {
     it('it should return status 400 and message "Đã tồn tại"', (done) => {
-
-      chai.request(host)
+      chai
+        .request(host)
         .post(path)
-        .send({ email: 'lenguyenhaoudw@gmail.com', password: 'Password1', fullname: "Nguyễn Văn B"})
+        .send({
+          email: 'lenguyenhaoudw@gmail.com',
+          password: 'Password1',
+          fullname: 'Nguyễn Văn B',
+        })
         .end((err, res) => {
-
           console.log(res.body);
 
           res.should.have.status(400);
@@ -48,12 +51,15 @@ describe('The Register API', () => {
    */
   describe('/register successfully ', () => {
     it('it should return status 201', (done) => {
-
-      chai.request(host)
+      chai
+        .request(host)
         .post(path)
-        .send({ email: 'vanngunguvan@gmail.com', password: 'Password1', fullname: "Nguyễn Văn B"})
+        .send({
+          email: 'vanngunguvan@gmail.com',
+          password: 'Password1',
+          fullname: 'Nguyễn Văn B',
+        })
         .end((err, res) => {
-
           // console.log(res.body);
 
           res.should.have.status(201);
@@ -63,5 +69,4 @@ describe('The Register API', () => {
         });
     });
   });
-
-})
+});

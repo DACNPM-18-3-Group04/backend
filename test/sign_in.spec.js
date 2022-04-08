@@ -9,10 +9,9 @@ let should = chai.should();
 chai.use(chaiHttp);
 //Our parent block
 describe('The Sign in API', () => {
-
   before(function () {
     this.skip(); // Weird test issue
-  })
+  });
 
   beforeEach((done) => {
     done();
@@ -27,12 +26,11 @@ describe('The Sign in API', () => {
    */
   describe('/sign-in is active ', () => {
     it('it should return status 400', (done) => {
-
-      chai.request(host)
+      chai
+        .request(host)
         .post(path)
         .send({ email: '', password: '' })
         .end((err, res) => {
-
           // console.log(res.body);
 
           res.should.have.status(400);
@@ -46,12 +44,11 @@ describe('The Sign in API', () => {
    */
   describe('/sign-in successfully sign in ', () => {
     it('it should return status 200 with user data', (done) => {
-
-      chai.request(host)
+      chai
+        .request(host)
         .post(path)
         .send({ email: 'lenguyenhaoudw@gmail.com', password: 'Password1@' })
         .end((err, res) => {
-
           // console.log(res.body);
 
           res.should.have.status(201);
@@ -67,7 +64,8 @@ describe('The Sign in API', () => {
             'account_type',
             'status',
             'createdAt',
-            'updatedAt');
+            'updatedAt',
+          );
           res.body.should.have.a.property('data');
           done();
         });
@@ -79,12 +77,11 @@ describe('The Sign in API', () => {
    */
   describe('/sign-in with empty email ', () => {
     it('it should return status 400 with meeage', (done) => {
-
-      chai.request(host)
+      chai
+        .request(host)
         .post(path)
         .send({ email: '', password: 'Password1@' })
         .end((err, res) => {
-
           // console.log(res.body);
 
           res.should.have.status(400);
@@ -100,12 +97,11 @@ describe('The Sign in API', () => {
    */
   describe('/sign-in with empty password ', () => {
     it('it should return status 400', (done) => {
-
-      chai.request(host)
+      chai
+        .request(host)
         .post(path)
         .send({ email: 'lenguyenhaoudw@gmail.com', password: '' })
         .end((err, res) => {
-
           // console.log(res.body);
 
           res.should.have.status(400);
@@ -115,5 +111,4 @@ describe('The Sign in API', () => {
         });
     });
   });
-
-})
+});

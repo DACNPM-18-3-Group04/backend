@@ -3,7 +3,8 @@ const { handle, isEmpty, clientLink } = require('../../../utils/helpers');
 const { hashPassword } = require('../../../utils/auth');
 const AccountTypes = require('../../../configs/constants/accountType');
 const AccountStatus = require('../../../configs/constants/accountStatus');
-const TEMPLATE_TYPES = require('../../../configs/nodemailer/mail_template.config').TEMPLATE_TYPES;
+const TEMPLATE_TYPES =
+  require('../../../configs/nodemailer/mail_template.config').TEMPLATE_TYPES;
 const genOneTimeCode = require('./genOneTimeCode.service');
 const MailService = require('../../email/email.service');
 
@@ -46,7 +47,7 @@ const handleRegister = async (params) => {
   if (err_ot_code) {
     console.log(err_ot_code);
     throw err_ot_code;
-  } 
+  }
 
   // Send email
   let params_email = {
@@ -57,12 +58,12 @@ const handleRegister = async (params) => {
     },
   };
   let [send_email, send_email_err] = await handle(
-    MailService.sendMail(params_email)
+    MailService.sendMail(params_email),
   );
   if (send_email_err) {
     console.log(send_email_err);
     throw send_email_err;
-  } 
+  }
 
   const passwordHash = hashPassword(params.password);
 
