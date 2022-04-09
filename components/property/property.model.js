@@ -61,6 +61,13 @@ const Property = db.define(tableName, {
   },
 });
 
+Property.belongsTo(District, {
+  foreignKey: 'district_id',
+});
+Property.belongsTo(User, {
+  foreignKey: 'author_id',
+});
+
 Property.sync({ alter: true })
   .then(() => {
     console.log(`Table ${tableName} synced`);

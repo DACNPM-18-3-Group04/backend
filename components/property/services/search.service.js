@@ -6,6 +6,8 @@ const {
 } = require('../../../configs/constants/system');
 const PropertyStatus = require('../../../configs/constants/property/propertyStatus');
 const { getQueryMinMaxFloat, getQueryMinMaxInt } = require('./helpers');
+const { District, Province } = require('../../propertyLocation/models');
+const User = require('../../user/user.model');
 
 const handleSearchProperty = async (
   query,
@@ -48,6 +50,17 @@ const handleSearchProperty = async (
   // console.log(queryObj);
   const findObj = {
     where: queryObj,
+    include: [
+      {
+        model: District,
+        include: Province,
+        attributes: ['id', 'name'],
+      },
+      {
+        model: User,
+        attributes: ['id', 'email', 'fullname', 'avatar', 'status'],
+      },
+    ],
     order: [['createdAt', 'DESC']],
   };
 
