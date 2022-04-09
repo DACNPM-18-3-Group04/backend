@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const db = require('../../configs/database');
+const db = require('../../../configs/database');
 
 const tableName = 'province';
 
@@ -19,13 +19,5 @@ const Province = db.define(
     timestamps: false,
   },
 );
-
-Province.sync({ alter: true })
-  .then(() => {
-    console.log(`Table ${tableName} synced`);
-  })
-  .catch((err) => {
-    console.log(`Error syncing table ${tableName} - ${err.message}`);
-  });
 
 module.exports = Province;
