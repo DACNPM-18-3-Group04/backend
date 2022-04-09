@@ -8,7 +8,10 @@ const { passport } = require('./configs/passport');
 const db = require('./configs/database');
 // Test DB
 db.authenticate()
-  .then(() => console.log('Database connected successfully'))
+  .then(() => {
+    console.log('Database connected successfully');
+    db.sync({ alter: true });
+  })
   .catch((err) => console.log('Database connection error: ', err));
 
 const ErrorMdw = require('./components/errors/error.middleware');

@@ -51,12 +51,12 @@ const User = db.define(
   },
 );
 
-User.sync({ alter: true })
-  .then(() => {
-    console.log('User table synced');
-  })
-  .catch((err) => {
-    console.log(`Error syncing table User - ${err.message}`);
-  });
+// User.sync({ alter: true })
+//   .then(() => {
+//     console.log('User table synced');
+//   })
+//   .catch((err) => {
+//     console.log(`Error syncing table User - ${err.message}`);
+//   });
 
 module.exports = User;

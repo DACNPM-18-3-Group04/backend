@@ -2,6 +2,9 @@
   "name": "propbook-service",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "test": "mocha test",
     "start": "node ./bin/www",
