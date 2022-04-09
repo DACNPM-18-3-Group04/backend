@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../../configs/database');
 
 const User = require('../user/user.model');
-const District = require('../propertyLocation/district.model');
+const { District } = require('../propertyLocation/models');
 const PropertyTypes = require('../../configs/constants/property/propertyType');
 const PropertyStatus = require('../../configs/constants/property/propertyStatus');
 
