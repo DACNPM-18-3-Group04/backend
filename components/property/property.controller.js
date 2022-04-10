@@ -18,7 +18,31 @@ const handleSearchProperty = async (req, res) => {
     .catch((err) => {
       console.log(err);
       res.status(500).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
+const handleCreateProperty = async (req, res) => {
+  const params = {
+    user: req.user,
+    ...req.body,
+  };
+
+  PropertyService.handleCreateProperty(params)
+    .then((data) => {
+      res.status(201).json({
         success: true,
+        data: data,
+        message: 'Đăng thông tin thành công',
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        success: false,
         data: {},
         message: err.message,
       });
@@ -27,6 +51,7 @@ const handleSearchProperty = async (req, res) => {
 
 const PropertyController = {
   handleSearchProperty,
+  handleCreateProperty,
 };
 
 module.exports = PropertyController;
