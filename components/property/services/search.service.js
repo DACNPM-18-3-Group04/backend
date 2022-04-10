@@ -72,7 +72,7 @@ const handleSearchProperty = async (
     }
   }
 
-  const [{ totalCount, rows }, errQuery] = await handle(
+  const [{ count, rows }, errQuery] = await handle(
     Property.findAndCountAll(findObj),
   );
 
@@ -86,7 +86,7 @@ const handleSearchProperty = async (
 
   return {
     properties: rows,
-    totalCount: totalCount,
+    totalCount: count,
     page: queryPage,
     limit: queryLimit,
     query,
