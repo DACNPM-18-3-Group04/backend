@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../../configs/database');
 
 const User = require('../user/user.model');
-const District = require('../propertyLocation/district.model');
+const { District } = require('../propertyLocation/models');
 const PropertyTypes = require('../../configs/constants/property/propertyType');
 const PropertyStatus = require('../../configs/constants/property/propertyStatus');
 
@@ -59,6 +59,13 @@ const Property = db.define(tableName, {
     defaultValue: PropertyStatus.DEFAULT,
     comment: 'A - Active, D - Disabled, S - Stopped selling',
   },
+});
+
+Property.belongsTo(District, {
+  foreignKey: 'district_id',
+});
+Property.belongsTo(User, {
+  foreignKey: 'author_id',
 });
 
 Property.sync({ alter: true })
