@@ -3,8 +3,9 @@ const { handle, isEmpty, clientLink } = require('../../../utils/helpers');
 const { hashPassword } = require('../../../utils/auth');
 const AccountTypes = require('../../../configs/constants/accountType');
 const AccountStatus = require('../../../configs/constants/accountStatus');
-const TEMPLATE_TYPES =
-  require('../../../configs/nodemailer/mail_template.config').TEMPLATE_TYPES;
+const {
+  TEMPLATE_TYPES,
+} = require('../../../configs/nodemailer/mail_template.config');
 const genOneTimeCode = require('./genOneTimeCode.service');
 const MailService = require('../../email/email.service');
 
@@ -57,6 +58,7 @@ const handleRegister = async (params) => {
       activation_link: clientLink.genActivationLink(ot_code),
     },
   };
+  // eslint-disable-next-line no-unused-vars
   let [send_email, send_email_err] = await handle(
     MailService.sendMail(params_email),
   );
