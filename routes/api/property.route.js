@@ -13,4 +13,6 @@ router.get('/search', PropertyController.handleSearchProperty);
 
 router.post('/', auth, PropertyController.handleCreateProperty);
 
+router.post('/update', auth, PropertyController.handleUpdateProperty);
+
 module.exports = router;
