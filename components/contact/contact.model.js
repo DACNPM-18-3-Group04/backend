@@ -26,6 +26,10 @@ const Contact = db.define(tableName, {
       key: 'id',
     },
   },
+  notes: {
+    type: Sequelize.STRING(255),
+    defaultValue: '',
+  },
   type: {
     type: Sequelize.STRING(3),
     // defaultValue: ,
@@ -38,10 +42,13 @@ const Contact = db.define(tableName, {
 });
 
 Contact.belongsTo(User, {
-  foreignKey: 'contact_user',
+  as: 'contactor',
+  foreignKey: { name: 'contact_user', allowNull: false },
 });
+
 Contact.belongsTo(Property, {
-  foreignKey: 'property_id',
+  as: 'receiver',
+  foreignKey: { name: 'property_id', allowNull: false },
 });
 
 Contact.sync({ alter: true })

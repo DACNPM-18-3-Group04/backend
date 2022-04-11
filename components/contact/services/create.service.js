@@ -1,38 +1,31 @@
-const { handle } = require('../../../utils/helpers');
-const Property = require('../../property/property.model');
-const User = require('../../user/user.model');
+const { handle, isEmpty } = require('../../../utils/helpers');
 const ContactModel = require('../contact.model');
 
 const handleSendContact = async ({ userID, propertyID, notes }) => {
-  const [contact, created] = await handle(
-    ContactModel.findOrCreate({
-      defaults: {
-        notes,
+  const [contact, err] = await handle(
+    ContactModel.findOne({
+      where: {
+        property_id: propertyID,
+        contact_user: userID,
       },
-      include: [
-        {
-          model: User,
-          as: 'User',
-          where: {
-            id: userID,
-          },
-          attributes: [],
-        },
-        {
-          model: Property,
-          as: 'Property',
-          where: {
-            id: propertyID,
-          },
-          attributes: [],
-        },
-      ],
     }),
   );
-  if (!created) throw new Error('Đã từng gửi thông tin liên hệ');
+  if (err) {
+    console.log(err);
+    throw new Error('Lỗi không tìm thấy thông tin liên hệ');
+  }
+  if (isEmpty(contact)) throw new Error('Thông tin liên hệ không tồn tại');
 
-  console.log(contact);
-  return contact;
+  const newContact = await handle(
+    ContactModel.create({
+      notes,
+      propertyID: propertyID,
+      contact_user: userID,
+    }),
+  );
+
+  console.log(newContact);
+  return newContact;
 };
 
 module.exports = handleSendContact;
