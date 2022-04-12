@@ -92,11 +92,30 @@ const handleGetListProperty = async (req, res) => {
     );
 };
 
+const handleGetPropertyById = async (req, res) => {
+  PropertyService.handleGetPropertyById(req.params)
+    .then((data) =>
+      res.status(200).json({
+        success: true,
+        data: data,
+        message: 'Lấy property thành công',
+      }),
+    )
+    .catch((err) =>
+      res.status(404).json({
+        success: false,
+        data: {},
+        message: err,
+      }),
+    );
+};
+
 const PropertyController = {
   handleSearchProperty,
   handleCreateProperty,
   handleUpdateProperty,
   handleGetListProperty,
+  handleGetPropertyById,
 };
 
 module.exports = PropertyController;
