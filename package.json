@@ -6,7 +6,7 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "dev" :"nodemon ./app.js",
+    "dev": "nodemon ./app.js",
     "test": "mocha test",
     "start": "node ./bin/www",
     "lint": "eslint \"./*.{js,ts,tsx}\"",

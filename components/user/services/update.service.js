@@ -38,7 +38,7 @@ const handleUpdateUserAccount = async (params) => {
   if (params.fullname) user.fullname = params.fullname;
   if (params.contact_email) user.contact_email = params.contact_email;
   if (params.contact_number) user.contact_number = params.contact_number;
-  if(params.avatar) user.avatar = params.avatar;
+  if (params.avatar) user.avatar = params.avatar;
 
   await user.save();
   await user.reload();
@@ -49,7 +49,7 @@ const handleUpdateUserAccount = async (params) => {
     fullname: user.fullname,
     contact_email: user.contact_email,
     contact_number: user.contact_number,
-    avatar : user.avatar
+    avatar: user.avatar,
   };
 };
 

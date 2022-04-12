@@ -24,7 +24,7 @@ const handleUpdateProperty = async (params) => {
   if (isEmpty(checkUser) || checkUser.status !== AccountStatus.ACTIVE) {
     throw new Error('Không có quyền thực hiện hành động này');
   }
-  
+
   //Check Mandatory field
   if (isEmpty(params.id)) {
     throw new Error('Tin không tồn tại Check Mandatory field');
@@ -33,13 +33,13 @@ const handleUpdateProperty = async (params) => {
     throw new Error('Người đăng không hợp lệ');
   }
 
-  //Find Property 
+  //Find Property
   let queryUpdateProperty = {
     where: {
       id: params.id,
-      author_id: params.author_id
+      author_id: params.author_id,
     },
-  }
+  };
   let [checkProperty, errCheckProperty] = await handle(
     Property.findOne(queryUpdateProperty),
   );
@@ -49,11 +49,17 @@ const handleUpdateProperty = async (params) => {
   }
 
   //Only Admin or author can edit the property
-  if ((checkProperty.author_id != checkUser.id) && checkUser.account_type == AccountType.ADMIN) {
+  if (
+    checkProperty.author_id != checkUser.id &&
+    checkUser.account_type == AccountType.ADMIN
+  ) {
     throw new Error('Không có quyền thực hiện hành động này');
   }
   //Only Admin can edit STOP_SELL Property
-  if (checkProperty.status == PropertyStatus.STOP_SELL && checkUser.account_type != AccountType.ADMIN) {
+  if (
+    checkProperty.status == PropertyStatus.STOP_SELL &&
+    checkUser.account_type != AccountType.ADMIN
+  ) {
     throw new Error('Không có quyền thực hiện hành động này');
   }
 
@@ -65,8 +71,14 @@ const handleUpdateProperty = async (params) => {
   }
 
   //Validate status
-  if(params.status){
-    if(![PropertyStatus.ACTIVE, PropertyStatus.DISABLED, PropertyStatus.STOP_SELL].includes(params.type)){
+  if (params.status) {
+    if (
+      ![
+        PropertyStatus.ACTIVE,
+        PropertyStatus.DISABLED,
+        PropertyStatus.STOP_SELL,
+      ].includes(params.type)
+    ) {
       throw new Error('Loại trạng thái tin đăng không hợp lệ');
     }
   }
@@ -85,7 +97,7 @@ const handleUpdateProperty = async (params) => {
     status: params.status || checkProperty.status,
   };
 
-  //Update 
+  //Update
   let [listUpdatedProperty, errNewProperty] = await handle(
     Property.update(paramsUpdateProperty, queryUpdateProperty),
   );

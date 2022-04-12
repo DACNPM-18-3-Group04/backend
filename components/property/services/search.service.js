@@ -20,8 +20,7 @@ const handleSearchProperty = async (
   const queryPage = Number.isInteger(page) ? page : undefined;
   const queryObj = {};
 
-  if(query.authorId)
-  {
+  if (query.authorId) {
     queryObj.author_id = query.authorId;
   }
 

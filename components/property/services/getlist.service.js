@@ -1,5 +1,7 @@
-const propertyModel = require('../../property/property.model');
-const handle = require('../../../utils/helpers/handlePromise')
+/* eslint-disable no-throw-literal */
+/* eslint-disable no-plusplus */
+const propertyModel = require('../property.model');
+// const handle = require('../../../utils/helpers/handlePromise');
 const limit = require('../../../configs/constants/property/propertyPaginate');
 
 const handleGetListProperty = async (params) => {
@@ -10,45 +12,46 @@ const handleGetListProperty = async (params) => {
     propertyModel.count(),
     propertyModel.findAll({
       offset: offset,
-      limit: limit
-    })
+      limit: limit,
+    }),
   ]);
 
   let nPages = Math.floor(total / limit);
   if (total % limit > 0) nPages++;
   const page_numbers = [];
-  for (i = 1; i <= nPages; i++) {
+  for (let i = 1; i <= nPages; i++) {
     page_numbers.push({
       value: i,
-      isCurrentPage: i === +page
-    })
+      isCurrentPage: i === +page,
+    });
   }
   if (page > nPages || page < 1) throw 'Not pound';
 
-  if (page == nPages) return {
-    property,
-    empty: property.length === 0,
-    page_numbers,
-    prev_value: +page - 1,
-    next_value: +page
-  };
-
-  if (page == 1) {
-    return {
-      property,
-      empty: property.length === 0,
-      page_numbers,
-      prev_value: 1,
-      next_value: +page + 1
-    };
-  } else {
+  if (page === nPages)
     return {
       property,
       empty: property.length === 0,
       page_numbers,
       prev_value: +page - 1,
-      next_value: +page + 1
+      next_value: +page,
     };
+
+  if (page === 1) {
+    return {
+      property,
+      empty: property.length === 0,
+      page_numbers,
+      prev_value: 1,
+      next_value: +page + 1,
+    };
+  }
+
+  return {
+    property,
+    empty: property.length === 0,
+    page_numbers,
+    prev_value: +page - 1,
+    next_value: +page + 1,
   };
 };
 

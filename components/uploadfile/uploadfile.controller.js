@@ -13,7 +13,7 @@ const handleUploadfile = (req, res) => {
   const { action } = req.body;
 
   const userId = req.user.id;
-  const email = req.user.email
+  const email = req.user.email;
   const extname = path.extname(req.file.originalname).toLowerCase();
   const tempPath = req.file.path;
   const nameFileUpload = `/assets/${date.getTime()}${extname}`;
@@ -28,7 +28,7 @@ const handleUploadfile = (req, res) => {
       }
 
       if (action === 'upload-avatar') {
-        const params = { userId: userId,avatar: nameFileUpload };
+        const params = { userId: userId, avatar: nameFileUpload };
         UserService.handleUpdateAccount(params)
           .then((data) =>
             res.status(200).send({

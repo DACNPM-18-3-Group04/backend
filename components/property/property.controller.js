@@ -80,16 +80,16 @@ const handleGetListProperty = async (req, res) => {
       res.status(200).json({
         success: true,
         data: data,
-        message: 'Lấy danh sách property thành công'
-      })
+        message: 'Lấy danh sách property thành công',
+      }),
     )
     .catch((err) =>
       res.status(404).json({
         success: false,
         data: {},
-        message: err.message
-      })
-    )
+        message: err.message,
+      }),
+    );
 };
 
 const PropertyController = {
