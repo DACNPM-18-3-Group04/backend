@@ -20,6 +20,11 @@ const handleSearchProperty = async (
   const queryPage = Number.isInteger(page) ? page : undefined;
   const queryObj = {};
 
+  if(query.authorId)
+  {
+    queryObj.author_id = query.authorId;
+  }
+
   if (query.keyword) {
     queryObj.title = {
       [Op.like]: `%${query.keyword}%`,

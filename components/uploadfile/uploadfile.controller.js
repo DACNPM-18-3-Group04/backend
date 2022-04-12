@@ -1,4 +1,5 @@
 var appRoot = require('app-root-path');
+const UserService = require('../user/services');
 const path = require('path');
 const fs = require('fs');
 
@@ -7,12 +8,16 @@ const handleError = (err, res) => {
 };
 
 const handleUploadfile = (req, res) => {
-  const tempPath = req.file.path;
   const date = new Date();
-  const targetPath = path.join(
-    `${appRoot}`,
-    `./public/assets/${date.getTime()}.png`,
-  );
+
+  const { action } = req.body;
+
+  const userId = req.user.id;
+  const email = req.user.email
+  const extname = path.extname(req.file.originalname).toLowerCase();
+  const tempPath = req.file.path;
+  const nameFileUpload = `/assets/${date.getTime()}${extname}`;
+  const targetPath = path.join(`${appRoot}`, `./public${nameFileUpload}`);
 
   if (path.extname(req.file.originalname).toLowerCase() === '.png') {
     console.log('datnc', tempPath, 'datnc', targetPath);
@@ -22,7 +27,25 @@ const handleUploadfile = (req, res) => {
         return handleError(err, res);
       }
 
-      res.status(200).contentType('text/plain').end('File uploaded!');
+      if (action === 'upload-avatar') {
+        const params = { userId: userId,avatar: nameFileUpload };
+        UserService.handleUpdateAccount(params)
+          .then((data) =>
+            res.status(200).send({
+              success: true,
+              data: data,
+              message: 'Cập nhật thông tin tài khoản thành công',
+            }),
+          )
+          .catch((err) => {
+            res.status(400).json({
+              success: false,
+              data: [],
+              message: err.message,
+            });
+          });
+        // res.status(200).contentType('text/plain').end('File uploaded!');
+      }
     });
   } else {
     fs.unlink(tempPath, (err) => {
