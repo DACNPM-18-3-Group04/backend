@@ -7,7 +7,7 @@ const User = require('../../user/user.model');
 const handleGetPropertyById = async (params) => {
   const { id } = params;
 
-  const property = await propertyModel.findAll({
+  const property = await propertyModel.findOne({
     where: {
       id: +id,
     },
