@@ -49,6 +49,30 @@ const handleCreateProperty = async (req, res) => {
     });
 };
 
+const handleUpdateProperty = async (req, res) => {
+  const params = {
+    user: req.user,
+    ...req.body,
+  };
+
+  PropertyService.handleUpdateProperty(params)
+    .then((data) => {
+      res.status(201).json({
+        success: true,
+        data: data,
+        message: 'Cập nhật thông tin thành công',
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
 const handleGetListProperty = async (req, res) => {
   const params = req.query.page;
   PropertyService.handleGetListProperty(params)
@@ -71,6 +95,7 @@ const handleGetListProperty = async (req, res) => {
 const PropertyController = {
   handleSearchProperty,
   handleCreateProperty,
+  handleUpdateProperty,
   handleGetListProperty,
 };
 
