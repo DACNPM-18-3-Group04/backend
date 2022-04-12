@@ -1,10 +1,14 @@
-var appRoot = require('app-root-path');
-const UserService = require('../user/services');
+let appRoot = require('app-root-path');
 const path = require('path');
 const fs = require('fs');
+const UserService = require('../user/services');
 
 const handleError = (err, res) => {
-  res.status(500).contentType('text/plain').end('Oops! Something went wrong!');
+  res.status(500).json({
+    success: false,
+    data: [],
+    message: 'Lỗi server',
+  });
 };
 
 const handleUploadfile = (req, res) => {
@@ -13,13 +17,14 @@ const handleUploadfile = (req, res) => {
   const { action } = req.body;
 
   const userId = req.user.id;
-  const email = req.user.email;
+  // const email = req.user.email;
   const extname = path.extname(req.file.originalname).toLowerCase();
   const tempPath = req.file.path;
   const nameFileUpload = `/assets/${date.getTime()}${extname}`;
   const targetPath = path.join(`${appRoot}`, `./public${nameFileUpload}`);
+  const allowedExts = ['.png', '.jpg'];
 
-  if (path.extname(req.file.originalname).toLowerCase() === '.png') {
+  if (allowedExts.includes(extname)) {
     console.log('datnc', tempPath, 'datnc', targetPath);
     fs.rename(tempPath, targetPath, (err) => {
       if (err) {
@@ -37,11 +42,11 @@ const handleUploadfile = (req, res) => {
               message: 'Cập nhật thông tin tài khoản thành công',
             }),
           )
-          .catch((err) => {
+          .catch((uploadErr) => {
             res.status(400).json({
               success: false,
-              data: [],
-              message: err.message,
+              data: {},
+              message: uploadErr.message,
             });
           });
         // res.status(200).contentType('text/plain').end('File uploaded!');
@@ -51,10 +56,11 @@ const handleUploadfile = (req, res) => {
     fs.unlink(tempPath, (err) => {
       if (err) return handleError(err, res);
 
-      res
-        .status(403)
-        .contentType('text/plain')
-        .end('Only .png files are allowed!');
+      res.status(403).json({
+        success: false,
+        data: {},
+        message: `File không hợp lệ (Hợp lệ ${allowedExts.join('/')})`,
+      });
     });
   }
 };

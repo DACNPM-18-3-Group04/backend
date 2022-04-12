@@ -2,7 +2,7 @@ const passport = require('passport');
 
 const auth = async function (req, res, next) {
   return passport.authenticate('jwt', { session: false }, (err, user) => {
-    console.log(user);
+    // console.log(user);
     if (err || !user) {
       return res.status(401).json({
         success: false,
