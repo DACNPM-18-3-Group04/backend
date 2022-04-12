@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
-const db = require('../../configs/database');
-const Property = require('../property/property.model');
-const User = require('../user/user.model');
-const ContactStatus = require('../../configs/constants/contact/contactStatus');
+const db = require('../../../configs/database');
+const Property = require('../../property/property.model');
+const User = require('../../user/user.model');
+const ContactStatus = require('../../../configs/constants/contact/contactStatus');
 
 const tableName = 'contact';
 
@@ -39,16 +39,6 @@ const Contact = db.define(tableName, {
     type: Sequelize.STRING(2),
     defaultValue: ContactStatus.DEFAULT,
   },
-});
-
-Contact.belongsTo(User, {
-  as: 'contactor',
-  foreignKey: { name: 'contact_user', allowNull: false },
-});
-
-Contact.belongsTo(Property, {
-  as: 'receiver',
-  foreignKey: { name: 'property_id', allowNull: false },
 });
 
 Contact.sync({ alter: true })
