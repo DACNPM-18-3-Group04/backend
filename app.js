@@ -10,7 +10,9 @@ const db = require('./configs/database');
 db.authenticate()
   .then(() => {
     console.log('Database connected successfully');
-    db.sync({ alter: true });
+    db.sync({ alter: true }).catch((err) =>
+      console.log(`Sync error: ${err.message}`),
+    );
   })
   .catch((err) => console.log('Database connection error: ', err));
 
