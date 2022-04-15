@@ -1,5 +1,8 @@
 const { handle, isEmpty } = require('../../../utils/helpers');
-const { Contact } = require('../model');
+const {
+  //
+  Contact,
+} = require('../../../models');
 
 const handleSendContact = async ({ userID, propertyID, notes }) => {
   const [contact, err] = await handle(

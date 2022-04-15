@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const db = require('../../configs/database');
-const AccountStatus = require('../../configs/constants/accountStatus');
+const db = require('../configs/database');
+const AccountStatus = require('../configs/constants/accountStatus');
 
 const User = db.define(
   'user',
@@ -50,13 +50,5 @@ const User = db.define(
     ],
   },
 );
-
-// User.sync({ alter: true })
-//   .then(() => {
-//     console.log('User table synced');
-//   })
-//   .catch((err) => {
-//     console.log(`Error syncing table User - ${err.message}`);
-//   });
 
 module.exports = User;

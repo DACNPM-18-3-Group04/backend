@@ -1,4 +1,7 @@
-const UserModel = require('../user.model');
+const {
+  //
+  User: UserModel,
+} = require('../../../models');
 const { handle, isEmpty, genRandomString } = require('../../../utils/helpers');
 const {
   MAX_RETRY_GEN_ACTIVATION_CODE,

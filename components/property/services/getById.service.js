@@ -1,11 +1,15 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-plusplus */
 const sequelize = require('sequelize');
-const propertyModel = require('../property.model');
-const { District, Province } = require('../../propertyLocation/models');
-const User = require('../../user/user.model');
-const { Contact, Review } = require('../../contact/model');
 const { isEmpty, handle } = require('../../../utils/helpers');
+const {
+  Property: propertyModel,
+  District,
+  Province,
+  User,
+  Contact,
+  Review,
+} = require('../../../models');
 
 const handleGetPropertyById = async ({ id, userID }) => {
   const property = await propertyModel.findOne({

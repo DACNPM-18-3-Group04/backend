@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
-const db = require('../../../configs/database');
-const Property = require('../../property/property.model');
-const User = require('../../user/user.model');
-const ContactStatus = require('../../../configs/constants/contact/contactStatus');
+const db = require('../configs/database');
+const Property = require('./property.model');
+const User = require('./user.model');
+const ContactStatus = require('../configs/constants/contact/contactStatus');
 
 const tableName = 'contact';
 
@@ -40,13 +40,5 @@ const Contact = db.define(tableName, {
     defaultValue: ContactStatus.DEFAULT,
   },
 });
-
-Contact.sync({ alter: true })
-  .then(() => {
-    console.log(`${tableName} table synced`);
-  })
-  .catch((err) => {
-    console.log(`Error syncing table ${tableName} - ${err.message}`);
-  });
 
 module.exports = Contact;

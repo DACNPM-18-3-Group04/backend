@@ -1,6 +1,9 @@
 const { matchPasswordHash, hashPassword } = require('../../../utils/auth');
 const { isEmpty, handle } = require('../../../utils/helpers');
-const UserModel = require('../user.model');
+const {
+  //
+  User: UserModel,
+} = require('../../../models');
 
 const handleUpdateUserAccount = async (params) => {
   let [user, chk_email_err] = await handle(

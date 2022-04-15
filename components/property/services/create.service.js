@@ -1,5 +1,8 @@
-const Property = require('../property.model');
-const UserModel = require('../../user/user.model');
+const {
+  //
+  Property,
+  User: UserModel,
+} = require('../../../models');
 const { handle, isEmpty } = require('../../../utils/helpers');
 const AccountStatus = require('../../../configs/constants/accountStatus');
 const PropertyType = require('../../../configs/constants/property/propertyType');
