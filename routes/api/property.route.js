@@ -17,6 +17,6 @@ router.post('/update', auth, PropertyController.handleUpdateProperty);
 
 router.get('/', PropertyController.handleGetListProperty);
 
-router.get('/:id', PropertyController.handleGetPropertyById);
+router.get('/details', PropertyController.handleGetPropertyById);
 
 module.exports = router;

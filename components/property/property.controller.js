@@ -93,7 +93,7 @@ const handleGetListProperty = async (req, res) => {
 };
 
 const handleGetPropertyById = async (req, res) => {
-  PropertyService.handleGetPropertyById(req.params)
+  PropertyService.handleGetPropertyById(req.query)
     .then((data) =>
       res.status(200).json({
         success: true,
