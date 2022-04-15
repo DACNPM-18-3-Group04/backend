@@ -32,15 +32,12 @@ const handleUpdateProperty = async (params) => {
   if (isEmpty(params.id)) {
     throw new Error('Tin không tồn tại Check Mandatory field');
   }
-  if (isEmpty(params.author_id)) {
-    throw new Error('Người đăng không hợp lệ');
-  }
 
   //Find Property
   let queryUpdateProperty = {
     where: {
       id: params.id,
-      author_id: params.author_id,
+      author_id: user.id,
     },
   };
   let [checkProperty, errCheckProperty] = await handle(
@@ -48,7 +45,7 @@ const handleUpdateProperty = async (params) => {
   );
   if (errCheckProperty) throw errCheckProperty;
   if (isEmpty(checkProperty)) {
-    throw new Error('Tin không tồn tại checkProperty');
+    throw new Error('Tin không tồn tại');
   }
 
   //Only Admin or author can edit the property
@@ -80,7 +77,7 @@ const handleUpdateProperty = async (params) => {
         PropertyStatus.ACTIVE,
         PropertyStatus.DISABLED,
         PropertyStatus.STOP_SELL,
-      ].includes(params.type)
+      ].includes(params.status)
     ) {
       throw new Error('Loại trạng thái tin đăng không hợp lệ');
     }
