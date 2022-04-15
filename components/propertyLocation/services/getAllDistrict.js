@@ -1,6 +1,6 @@
 // const Sequelize = require('sequelize');
 
-const { Province, District } = require('../models');
+const { Province, District } = require('../../../models');
 const { handle } = require('../../../utils/helpers');
 
 const handleGetAllDistrict = async () => {

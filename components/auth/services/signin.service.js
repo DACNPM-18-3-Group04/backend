@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken');
-const UserModel = require('../../user/user.model');
+const {
+  //
+  User: UserModel,
+} = require('../../../models');
 const { handle, isEmpty } = require('../../../utils/helpers');
 const { matchPasswordHash } = require('../../../utils/auth');
 const { jwtOptions } = require('../../../configs/passport');

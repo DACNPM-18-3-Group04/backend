@@ -1,5 +1,8 @@
-const Property = require('../property.model');
-const UserModel = require('../../user/user.model');
+const {
+  //
+  Property,
+  User: UserModel,
+} = require('../../../models');
 const { handle, isEmpty } = require('../../../utils/helpers');
 const AccountStatus = require('../../../configs/constants/accountStatus');
 const PropertyType = require('../../../configs/constants/property/propertyType');
@@ -50,15 +53,15 @@ const handleUpdateProperty = async (params) => {
 
   //Only Admin or author can edit the property
   if (
-    checkProperty.author_id != checkUser.id &&
-    checkUser.account_type == AccountType.ADMIN
+    checkProperty.author_id !== checkUser.id &&
+    checkUser.account_type === AccountType.ADMIN
   ) {
     throw new Error('Không có quyền thực hiện hành động này');
   }
   //Only Admin can edit STOP_SELL Property
   if (
-    checkProperty.status == PropertyStatus.STOP_SELL &&
-    checkUser.account_type != AccountType.ADMIN
+    checkProperty.status === PropertyStatus.STOP_SELL &&
+    checkUser.account_type !== AccountType.ADMIN
   ) {
     throw new Error('Không có quyền thực hiện hành động này');
   }
@@ -98,6 +101,7 @@ const handleUpdateProperty = async (params) => {
   };
 
   //Update
+  // eslint-disable-next-line no-unused-vars
   let [listUpdatedProperty, errNewProperty] = await handle(
     Property.update(paramsUpdateProperty, queryUpdateProperty),
   );

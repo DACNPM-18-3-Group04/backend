@@ -1,8 +1,11 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-plusplus */
-const propertyModel = require('../property.model');
-const { District, Province } = require('../../propertyLocation/models');
-const User = require('../../user/user.model');
+const {
+  Property: propertyModel,
+  District,
+  Province,
+  User,
+} = require('../../../models');
 
 const handleGetPropertyById = async (params) => {
   const { id } = params;

@@ -24,6 +24,7 @@ async function sendEmail(params) {
   let email_info = getMailInfomation(params);
 
   console.log(email_info);
+  // eslint-disable-next-line no-unused-vars
   let [response, err] = await handle(transporter.sendMail(email_info));
   if (err) {
     throw err;

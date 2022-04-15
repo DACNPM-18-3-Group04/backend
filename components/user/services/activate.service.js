@@ -1,4 +1,7 @@
-const UserModel = require('../user.model');
+const {
+  //
+  User: UserModel,
+} = require('../../../models');
 const { handle, isEmpty } = require('../../../utils/helpers');
 
 async function handleActivateAccount(params) {
@@ -30,6 +33,7 @@ async function handleActivateAccount(params) {
   };
 
   const userId = user.id;
+  // eslint-disable-next-line no-unused-vars
   let [user_updated, err_user_updated] = await handle(
     UserModel.update(_params_update, {
       where: {

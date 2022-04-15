@@ -1,6 +1,9 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-plusplus */
-const propertyModel = require('../property.model');
+const {
+  //
+  Property: propertyModel,
+} = require('../../../models');
 // const handle = require('../../../utils/helpers/handlePromise');
 const limit = require('../../../configs/constants/property/propertyPaginate');
 
