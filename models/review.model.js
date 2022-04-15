@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const db = require('../../../configs/database');
+const db = require('../configs/database');
 const Contact = require('./contact.model');
 
 const tableName = 'review';
@@ -34,13 +34,5 @@ const Review = db.define(tableName, {
     defaultValue: '',
   },
 });
-
-Review.sync({ alter: true })
-  .then(() => {
-    console.log(`${tableName} table synced`);
-  })
-  .catch((err) => {
-    console.log(`Error syncing table ${tableName} - ${err.message}`);
-  });
 
 module.exports = Review;
