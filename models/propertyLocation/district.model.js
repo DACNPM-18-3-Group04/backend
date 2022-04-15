@@ -1,5 +1,9 @@
+/**
+ * Declaration file, DO NOT REQUIRE FROM THIS, this lacks relationships
+ * REQUIRE FROM INDEX.JS
+ */
 const Sequelize = require('sequelize');
-const db = require('../../../configs/database');
+const db = require('../../configs/database');
 const Province = require('./province.model');
 
 const tableName = 'district';

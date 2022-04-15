@@ -1,5 +1,8 @@
 const { isEmpty, handle } = require('../../../utils/helpers');
-const UserModel = require('../user.model');
+const {
+  //
+  User: UserModel,
+} = require('../../../models');
 
 const handleGetInfo = async (userId) => {
   let [user, chk_email_err] = await handle(

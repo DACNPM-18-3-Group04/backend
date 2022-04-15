@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
-const db = require('../../configs/database');
+const db = require('../configs/database');
 
-const User = require('../user/user.model');
-const { District } = require('../propertyLocation/models');
-const PropertyTypes = require('../../configs/constants/property/propertyType');
-const PropertyStatus = require('../../configs/constants/property/propertyStatus');
+const User = require('./contact.model');
+const { District } = require('./propertyLocation');
+const PropertyTypes = require('../configs/constants/property/propertyType');
+const PropertyStatus = require('../configs/constants/property/propertyStatus');
 
 const tableName = 'property';
 
@@ -60,20 +60,5 @@ const Property = db.define(tableName, {
     comment: 'A - Active, D - Disabled, S - Stopped selling',
   },
 });
-
-Property.belongsTo(District, {
-  foreignKey: 'district_id',
-});
-Property.belongsTo(User, {
-  foreignKey: 'author_id',
-});
-
-Property.sync({ alter: true })
-  .then(() => {
-    console.log(`Table ${tableName} synced`);
-  })
-  .catch((err) => {
-    console.log(`Error syncing table ${tableName} - ${err.message}`);
-  });
 
 module.exports = Property;

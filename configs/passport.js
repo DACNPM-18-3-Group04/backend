@@ -5,7 +5,10 @@ const JwtStrategy = passportJWT.Strategy;
 const jwtOptions = {};
 const apiConfig = require('./default.config').api;
 
-const UserModel = require('../components/user/user.model');
+const {
+  //
+  User: UserModel,
+} = require('../models');
 
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = apiConfig.secret_key;

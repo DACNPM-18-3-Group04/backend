@@ -1,4 +1,7 @@
-const UserModel = require('../user.model');
+const {
+  //
+  User: UserModel,
+} = require('../../../models');
 const { handle, isEmpty, clientLink } = require('../../../utils/helpers');
 const { hashPassword } = require('../../../utils/auth');
 const AccountTypes = require('../../../configs/constants/accountType');

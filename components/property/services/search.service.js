@@ -1,13 +1,18 @@
 const { Op } = require('sequelize');
-const Property = require('../property.model');
+const {
+  //
+  Property,
+  District,
+  Province,
+  User,
+} = require('../../../models');
+const PropertyStatus = require('../../../configs/constants/property/propertyStatus');
+
 const { handle } = require('../../../utils/helpers');
+const { getQueryMinMaxFloat, getQueryMinMaxInt } = require('./helpers');
 const {
   DEFAULT_LIMIT_PAGiNATION,
 } = require('../../../configs/constants/system');
-const PropertyStatus = require('../../../configs/constants/property/propertyStatus');
-const { getQueryMinMaxFloat, getQueryMinMaxInt } = require('./helpers');
-const { District, Province } = require('../../propertyLocation/models');
-const User = require('../../user/user.model');
 
 const handleSearchProperty = async (
   query,
