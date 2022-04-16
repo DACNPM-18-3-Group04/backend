@@ -4,19 +4,21 @@ const PropertyLocationController = require('../../components/propertyLocation/pr
 const { auth } = require('../../components/auth/auth.middleware');
 const router = express.Router();
 
+const microServiceProperty = require('../../miscroservice/propertyService')
+
 router.get(
   '/locations/districts',
   PropertyLocationController.handleGetDistricts,
 );
 
-router.get('/search', PropertyController.handleSearchProperty);
+router.get('/search',microServiceProperty.handleSearchProperty);
 
-router.post('/', auth, PropertyController.handleCreateProperty);
+router.post('/', auth, microServiceProperty.handleCreateProperty);
 
-router.post('/update', auth, PropertyController.handleUpdateProperty);
+router.post('/update', auth, microServiceProperty.handleUpdateProperty);
 
-router.get('/', PropertyController.handleGetListProperty);
+router.get('/',microServiceProperty.handleGetListProperty);
 
-router.get('/details', PropertyController.handleGetPropertyById);
+router.get('/details', microServiceProperty.handleGetPropertyById);
 
 module.exports = router;

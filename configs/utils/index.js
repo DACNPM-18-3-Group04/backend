@@ -12,6 +12,7 @@ const DEFAULT_DB_PORT = '3306';
 const DEFAULT_DB_NAME = 'test_db';
 const DEFAULT_DB_USERNAME = 'root';
 const DEFAULT_DB_PASSWORD = 'root';
+const DEFAULT_PROPERTY_SERVICE = 'http://localhost:4001';
 // DATABASE
 
 const getGoogleOauthClientID = () => {
@@ -48,6 +49,11 @@ const getDBPassword = () => {
 };
 // DATABASE
 
+//SERVICE PROPERTY
+const getDomainPropertyService = () =>{
+  return process.env.PROPERTY_SERVICE || DEFAULT_PROPERTY_SERVICE
+}
+
 module.exports = {
   // MAIL
   ...DefaultMailConfig,
@@ -62,4 +68,6 @@ module.exports = {
   getDBUsername,
   getDBPassword,
   // DATABASE
+  //SERVICE PROPERTY
+  getDomainPropertyService
 };
