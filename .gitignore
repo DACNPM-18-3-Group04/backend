@@ -64,3 +64,4 @@ package-lock.json
 
 public/assets/*
 public/tempt/*
+!public/tempt/README.md
