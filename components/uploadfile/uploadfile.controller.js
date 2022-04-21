@@ -2,7 +2,38 @@ let appRoot = require('app-root-path');
 const path = require('path');
 const fs = require('fs');
 const UserService = require('../user/services');
+const UploadService = require('./services');
 
+const handleUploadAvatar = (req, res) => {
+  if (!req.file) {
+    res.status(400).send({
+      success: false,
+      data: {},
+      message: 'Lỗi - Không tìm thấy hình ảnh',
+    });
+  }
+  const userId = req.user.id;
+  const tempPath = req.file.path;
+
+  UploadService.uploadAvatar(userId, req.file)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Cập nhật thông tin tài khoản thành công',
+      }),
+    )
+    .catch((err) => {
+      fs.unlinkSync(tempPath);
+      res.status(400).send({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
+// Old, DO NOT USE
 const handleError = (err, res) => {
   res.status(500).json({
     success: false,
@@ -64,4 +95,9 @@ const handleUploadfile = (req, res) => {
     });
   }
 };
-module.exports = { handleUploadfile };
+// Old, DO NOT USE
+
+module.exports = {
+  handleUploadfile,
+  handleUploadAvatar,
+};

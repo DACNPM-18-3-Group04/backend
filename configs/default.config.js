@@ -1,3 +1,6 @@
+let appRoot = require('app-root-path');
+const path = require('path');
+
 const DefaultConfig = require('./utils/index');
 
 module.exports = {
@@ -8,6 +11,8 @@ module.exports = {
     secret_key: DefaultConfig.getSecretKey(),
     auth_header: 'Authorization',
   },
+
+  temp_file_path: path.join(`${appRoot}`, './public/tempt'),
 
   client: {
     host: DefaultConfig.getClientHost(),
