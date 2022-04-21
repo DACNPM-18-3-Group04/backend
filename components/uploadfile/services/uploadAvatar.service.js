@@ -9,9 +9,9 @@ const uploadAvatar = async (userId, reqFile) => {
   }
 
   const extname = path.extname(reqFile.originalname).toLowerCase();
-  const allowedExts = ['.png', '.jpg'];
+  const allowedExts = ['.png', '.jpg', '.jpeg'];
   if (!allowedExts.includes(extname)) {
-    throw new Error(`File không hợp lệ (Hợp lệ ${allowedExts.join('/')})`);
+    throw new Error(`File không hợp lệ (Hợp lệ ${allowedExts.join('|')})`);
   }
 
   let { filename } = reqFile;

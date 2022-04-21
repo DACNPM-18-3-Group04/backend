@@ -19,11 +19,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const {
-  handleUploadfile,
+  // handleUploadfile,
   handleUploadAvatar,
 } = require('../../components/uploadfile/uploadfile.controller');
 
-router.post('/file', auth, upload.single('file'), handleUploadfile);
+// router.post('/file', auth, upload.single('file'), handleUploadfile);
 
 router.post('/avatar', auth, upload.single('image'), handleUploadAvatar);
 
