@@ -7,6 +7,7 @@ const { handle, isEmpty } = require('../../../utils/helpers');
 const { matchPasswordHash } = require('../../../utils/auth');
 const { jwtOptions } = require('../../../configs/passport');
 const AccountStatus = require('../../../configs/constants/accountStatus');
+const AccountType = require('../../../configs/constants/accountType');
 
 const handleSignIn = async (params) => {
   // Validate email
@@ -18,6 +19,8 @@ const handleSignIn = async (params) => {
   if (isEmpty(params.password)) {
     throw new Error('Vui lòng truyền password');
   }
+
+  let account_type = params.account_type || AccountType.NORMAL;
 
   if (
     !params.password.match(
@@ -34,6 +37,7 @@ const handleSignIn = async (params) => {
     UserModel.findOne({
       where: {
         email: params.email,
+        account_type: account_type,
       },
     }),
   );
@@ -46,6 +50,10 @@ const handleSignIn = async (params) => {
   // Check active user
   if (user.status === AccountStatus.INACTIVATED) {
     throw new Error('Tải khoản chưa được kích hoạt');
+  }
+
+  if (user.status === AccountStatus.DISABLED) {
+    throw new Error('Tải khoản đã bị khóa');
   }
 
   if (!matchPasswordHash(params.password, user.password)) {

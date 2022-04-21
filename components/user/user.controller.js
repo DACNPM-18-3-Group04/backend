@@ -41,7 +41,7 @@ const handleActivateAccount = (req, res) => {
 
 const handleUpdateAccount = (req, res) => {
   let params = req.body;
-  params.userId = req.user?.id;
+  params.userId = req.user ? req.user.id : null;
   UserService.handleUpdateAccount(params)
     .then((data) =>
       res.status(200).send({
@@ -60,7 +60,7 @@ const handleUpdateAccount = (req, res) => {
 };
 
 const handleGetInfo = (req, res) => {
-  UserService.handleGetInfo(req.user?.id)
+  UserService.handleGetInfo(req.user ? req.user.id : null)
     .then((data) =>
       res.status(200).send({
         success: true,
