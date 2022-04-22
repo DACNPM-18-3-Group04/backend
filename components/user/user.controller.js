@@ -41,7 +41,7 @@ const handleActivateAccount = (req, res) => {
 
 const handleUpdateAccount = (req, res) => {
   let params = req.body;
-  params.userId = req.user?.id;
+  params.userId = req.user ? req.user.id : null;
   UserService.handleUpdateAccount(params)
     .then((data) =>
       res.status(200).send({
@@ -60,7 +60,7 @@ const handleUpdateAccount = (req, res) => {
 };
 
 const handleGetInfo = (req, res) => {
-  UserService.handleGetInfo(req.user?.id)
+  UserService.handleGetInfo(req.user ? req.user.id : null)
     .then((data) =>
       res.status(200).send({
         success: true,
@@ -77,9 +77,35 @@ const handleGetInfo = (req, res) => {
     });
 };
 
+const handleListUser = async (req, res) => {
+  const { query } = req;
+  const limit = Number.parseInt(query.limit, 10);
+  const page = Number.parseInt(query.page, 10);
+  query.limit = undefined;
+  query.page = undefined;
+
+  UserService.handleListUser(req.user, query, page, limit)
+    .then((data) => {
+      res.status(200).json({
+        success: true,
+        data: data,
+        message: 'Lấy thông tin thành công',
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
   handleRegister,
   handleActivateAccount,
   handleUpdateAccount,
   handleGetInfo,
+  handleListUser,
 };
