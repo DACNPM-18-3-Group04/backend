@@ -76,7 +76,7 @@ const handleListUser = async (
   // console.log(queryLimit);
 
   return {
-    properties: rows,
+    users: rows,
     totalCount: count,
     page: queryPage,
     limit: queryLimit,
