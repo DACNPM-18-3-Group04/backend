@@ -51,7 +51,7 @@ const handleListUser = async (
   // console.log(queryObj);
   const findObj = {
     where: queryObj,
-    attributes: { exclude: ['password'] },
+    attributes: { exclude: ['password', 'token'] },
     order: [['createdAt', 'DESC']],
   };
 
