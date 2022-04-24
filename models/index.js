@@ -16,19 +16,17 @@ Property.belongsTo(User, {
   foreignKey: 'author_id',
 });
 Property.hasMany(Contact, {
-  foreignKey: 'id',
+  foreignKey: 'property_id',
 });
 
 Contact.belongsTo(User, {
-  as: 'contactor',
-  foreignKey: { name: 'contact_user', allowNull: false },
+  foreignKey: 'contact_user',
 });
 Contact.belongsTo(Property, {
-  as: 'receiver',
   foreignKey: 'property_id',
 });
 Contact.hasOne(Review, {
-  foreignKey: 'id',
+  foreignKey: 'contact_id',
 });
 
 Review.belongsTo(Contact, {
