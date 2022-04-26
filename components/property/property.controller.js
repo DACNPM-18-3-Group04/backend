@@ -110,12 +110,40 @@ const handleGetPropertyById = async (req, res) => {
     );
 };
 
+const handleAdminGetProperty = async (req, res) => {
+  console.log('aaaa');
+  console.log(req);
+  const { query } = req;
+  const limit = Number.parseInt(query.limit, 10);
+  const page = Number.parseInt(query.page, 10);
+  query.limit = undefined;
+  query.page = undefined;
+
+  PropertyService.handleAdminGetProperty(req.user, query, page, limit)
+    .then((data) => {
+      res.status(200).json({
+        success: true,
+        data: data,
+        message: 'Lấy thông tin thành công',
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
 const PropertyController = {
   handleSearchProperty,
   handleCreateProperty,
   handleUpdateProperty,
   handleGetListProperty,
   handleGetPropertyById,
+  handleAdminGetProperty,
 };
 
 module.exports = PropertyController;

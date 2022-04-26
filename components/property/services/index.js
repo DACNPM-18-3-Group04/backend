@@ -3,6 +3,7 @@ const handleCreateProperty = require('./create.service');
 const handleUpdateProperty = require('./update.service');
 const handleGetListProperty = require('./getlist.service');
 const handleGetPropertyById = require('./getById.service');
+const handleAdminGetProperty = require('./adminGetList.service');
 
 module.exports = {
   handleSearchProperty,
@@ -10,4 +11,5 @@ module.exports = {
   handleUpdateProperty,
   handleGetListProperty,
   handleGetPropertyById,
+  handleAdminGetProperty,
 };
