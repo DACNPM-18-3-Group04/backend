@@ -111,8 +111,6 @@ const handleGetPropertyById = async (req, res) => {
 };
 
 const handleAdminGetProperty = async (req, res) => {
-  console.log('aaaa');
-  console.log(req);
   const { query } = req;
   const limit = Number.parseInt(query.limit, 10);
   const page = Number.parseInt(query.page, 10);
