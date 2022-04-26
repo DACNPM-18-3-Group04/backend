@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.post('/send', auth, ContactController.handleSendContact);
 
+router.get('/list', auth, ContactController.handleGetListContact);
+
 module.exports = router;

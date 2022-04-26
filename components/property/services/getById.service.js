@@ -33,7 +33,15 @@ const handleGetPropertyById = async ({ id, userID }) => {
       },
       {
         model: User,
-        attributes: ['id', 'email', 'fullname', 'avatar', 'status'],
+        attributes: [
+          'id',
+          'email',
+          'fullname',
+          'avatar',
+          'status',
+          'contact_email',
+          'contact_number',
+        ],
         required: false,
       },
       {
@@ -55,8 +63,8 @@ const handleGetPropertyById = async ({ id, userID }) => {
     throw 'Not found';
   }
 
-  if (isEmpty(userID)) {
-    const [contactor, err] = await handle(
+  if (!isEmpty(userID)) {
+    const [myContact, err] = await handle(
       Contact.findOne({
         where: {
           contact_user: userID,
@@ -69,12 +77,10 @@ const handleGetPropertyById = async ({ id, userID }) => {
       }),
     );
     if (err) throw err;
-    if (!isEmpty(contactor)) return { property, contactor };
+    if (!isEmpty(myContact)) return { property, myContact };
   }
 
-  return {
-    property,
-  };
+  return { property };
 };
 
 module.exports = handleGetPropertyById;

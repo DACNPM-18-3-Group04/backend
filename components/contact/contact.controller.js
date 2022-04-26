@@ -22,4 +22,26 @@ const handleSendContact = (req, res) => {
     });
 };
 
-module.exports = { handleSendContact };
+const handleGetListContact = (req, res) => {
+  ContactServices.handleFetchAllMyContact({ userID: req.user.id })
+    .then((contacts) =>
+      res.status(201).json({
+        success: true,
+        data: contacts,
+        message: 'Lấy danh sách liên hệ thành công',
+      }),
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
+module.exports = {
+  handleSendContact,
+  handleGetListContact,
+};
