@@ -5,4 +5,6 @@ const PropertyController = require('../../../components/property/property.contro
 
 router.get('/:id', auth, PropertyController.Admin.handleGetPropertyById);
 
+router.put('/:id', auth, PropertyController.Admin.handleUpdateProperty);
+
 module.exports = router;

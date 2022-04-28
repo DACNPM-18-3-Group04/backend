@@ -4,6 +4,7 @@ const handleUpdateProperty = require('./update.service');
 const handleGetListProperty = require('./getlist.service');
 const handleGetPropertyById = require('./getById.service');
 const handleAdminGetPropertyById = require('./getById.admin.service');
+const handleAdminUpdateProperty = require('./update.admin.service');
 
 module.exports = {
   handleSearchProperty,
@@ -14,4 +15,5 @@ module.exports = {
 
   // Admin services
   handleAdminGetPropertyById,
+  handleAdminUpdateProperty,
 };
