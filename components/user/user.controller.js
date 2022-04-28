@@ -102,10 +102,59 @@ const handleListUser = async (req, res) => {
     });
 };
 
+const handleAdminUpdateUser = async (req, res) => {
+  const params = {
+    user: req.user,
+    id: req.params.id,
+    ...req.body,
+  };
+  UserService.handleAdminUpdateUser(params)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Cập nhật thông tin tài khoản thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: [],
+        message: err.message,
+      });
+    });
+};
+
+const handleAdminGetUserInfo = async (req, res) => {
+  const params = {
+    user: req.user,
+    id: req.params.id,
+  };
+  UserService.handleAdminGetUserInfo(params)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Lấy thông tin tài khoản thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: [],
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
   handleRegister,
   handleActivateAccount,
   handleUpdateAccount,
   handleGetInfo,
+
+  //Admin controllers
   handleListUser,
+  handleAdminUpdateUser,
+  handleAdminGetUserInfo,
 };
