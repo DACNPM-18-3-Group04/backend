@@ -105,7 +105,29 @@ const handleGetPropertyById = async (req, res) => {
       res.status(404).json({
         success: false,
         data: {},
-        message: err,
+        message: err.message,
+      }),
+    );
+};
+
+const handleAdminGetPropertyById = async (req, res) => {
+  const params = {
+    user: req.user,
+    id: req.params.id,
+  };
+  PropertyService.handleAdminGetPropertyById(params)
+    .then((data) =>
+      res.status(200).json({
+        success: true,
+        data: data,
+        message: 'Lấy BĐS thành công',
+      }),
+    )
+    .catch((err) =>
+      res.status(404).json({
+        success: false,
+        data: {},
+        message: err.message,
       }),
     );
 };
@@ -116,6 +138,9 @@ const PropertyController = {
   handleUpdateProperty,
   handleGetListProperty,
   handleGetPropertyById,
+  Admin: {
+    handleGetPropertyById: handleAdminGetPropertyById,
+  },
 };
 
 module.exports = PropertyController;
