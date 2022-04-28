@@ -5,4 +5,8 @@ const UserController = require('../../../components/user/user.controller');
 
 router.get('/', auth, UserController.handleListUser);
 
+router.get('/:id', auth, UserController.handleAdminGetUserInfo);
+
+router.put('/:id', auth, UserController.handleAdminUpdateUser);
+
 module.exports = router;
