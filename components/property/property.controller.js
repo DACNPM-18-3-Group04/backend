@@ -189,10 +189,10 @@ const PropertyController = {
   handleGetListProperty,
   handleGetPropertyById,
   Admin: {
+    handleGetProperty: handleAdminGetProperty,
     handleGetPropertyById: handleAdminGetPropertyById,
     handleUpdateProperty: handleAdminUpdateProperty,
   },
-  handleAdminGetProperty,
 };
 
 module.exports = PropertyController;
