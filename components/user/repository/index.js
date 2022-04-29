@@ -1,5 +1,5 @@
 // user.repository.js
-const getById = require('./getById');
+const getById = require('./getbyId');
 const updateById = require('./updateById');
 
 const UserRepository = {
