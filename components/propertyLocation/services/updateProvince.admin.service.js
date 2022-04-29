@@ -42,7 +42,7 @@ const updateProvince = async ({ id, name, user }) => {
   if (errUpdate) throw errUpdate;
 
   return {
-    district: {
+    province: {
       id,
       name,
     },
