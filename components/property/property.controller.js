@@ -105,9 +105,56 @@ const handleGetPropertyById = async (req, res) => {
       res.status(404).json({
         success: false,
         data: {},
-        message: err,
+        message: err.message,
       }),
     );
+};
+
+const handleAdminGetPropertyById = async (req, res) => {
+  const params = {
+    user: req.user,
+    id: req.params.id,
+  };
+  PropertyService.handleAdminGetPropertyById(params)
+    .then((data) =>
+      res.status(200).json({
+        success: true,
+        data: data,
+        message: 'Lấy BĐS thành công',
+      }),
+    )
+    .catch((err) =>
+      res.status(404).json({
+        success: false,
+        data: {},
+        message: err.message,
+      }),
+    );
+};
+
+const handleAdminUpdateProperty = async (req, res) => {
+  const params = {
+    user: req.user,
+    id: req.params.id,
+    ...req.body,
+  };
+
+  PropertyService.handleAdminUpdateProperty(params)
+    .then((data) => {
+      res.status(201).json({
+        success: true,
+        data: data,
+        message: 'Cập nhật thông tin thành công',
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
 };
 
 const handleAdminGetProperty = async (req, res) => {
@@ -141,7 +188,11 @@ const PropertyController = {
   handleUpdateProperty,
   handleGetListProperty,
   handleGetPropertyById,
-  handleAdminGetProperty,
+  Admin: {
+    handleGetProperty: handleAdminGetProperty,
+    handleGetPropertyById: handleAdminGetPropertyById,
+    handleUpdateProperty: handleAdminUpdateProperty,
+  },
 };
 
 module.exports = PropertyController;

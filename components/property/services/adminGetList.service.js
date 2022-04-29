@@ -9,7 +9,6 @@ const {
 } = require('../../../configs/constants/system');
 const AccountStatus = require('../../../configs/constants/accountStatus');
 const AccountType = require('../../../configs/constants/accountType');
-const PropertyStatus = require('../../../configs/constants/property/propertyStatus');
 
 const handleAdminGetProperty = async (
   user,
@@ -58,6 +57,11 @@ const handleAdminGetProperty = async (
     queryObj.type = query.propertyType;
   }
 
+  const { propertyStatus } = query;
+  if (propertyStatus) {
+    queryObj.status = propertyStatus;
+  }
+
   const priceQueryObj = getQueryMinMaxFloat(query.maxPrice, query.minPrice);
   const areaQueryObj = getQueryMinMaxInt(query.maxArea, query.minArea);
 
@@ -68,8 +72,6 @@ const handleAdminGetProperty = async (
   if (areaQueryObj) {
     queryObj.area = areaQueryObj;
   }
-
-  queryObj.status = query.propertyStatus || PropertyStatus.ACTIVE;
 
   const findObj = {
     where: queryObj,
@@ -95,17 +97,15 @@ const handleAdminGetProperty = async (
     }
   }
 
-  const [{ count, rows }, errQuery] = await handle(
-    Property.findAndCountAll(findObj),
-  );
+  const [result, errQuery] = await handle(Property.findAndCountAll(findObj));
 
   if (errQuery) {
     throw new Error(errQuery.message);
   }
 
   return {
-    properties: rows,
-    totalCount: count,
+    properties: result.rows,
+    totalCount: result.count,
     page: queryPage,
     limit: queryLimit,
     query,

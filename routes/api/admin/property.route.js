@@ -3,6 +3,10 @@ const { auth } = require('../../../components/auth/auth.middleware');
 const router = express.Router();
 const PropertyController = require('../../../components/property/property.controller');
 
-router.get('/', auth, PropertyController.handleAdminGetProperty);
+router.get('/', auth, PropertyController.Admin.handleGetProperty);
+
+router.get('/:id', auth, PropertyController.Admin.handleGetPropertyById);
+
+router.put('/:id', auth, PropertyController.Admin.handleUpdateProperty);
 
 module.exports = router;

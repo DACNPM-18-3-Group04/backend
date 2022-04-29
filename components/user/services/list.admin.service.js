@@ -63,9 +63,7 @@ const handleListUser = async (
     }
   }
 
-  const [{ count, rows }, errQuery] = await handle(
-    User.findAndCountAll(findObj),
-  );
+  const [result, errQuery] = await handle(User.findAndCountAll(findObj));
 
   if (errQuery) {
     console.log(errQuery);
@@ -76,8 +74,8 @@ const handleListUser = async (
   // console.log(queryLimit);
 
   return {
-    users: rows,
-    totalCount: count,
+    users: result.rows,
+    totalCount: result.count,
     page: queryPage,
     limit: queryLimit,
     query,
