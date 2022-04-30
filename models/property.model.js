@@ -46,14 +46,14 @@ const Property = db.define(tableName, {
       key: 'id',
     },
   },
-  author_id: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: User,
-      key: 'id',
-    },
-    comment: 'The user who created this',
-  },
+  // author_id: {
+  //   type: Sequelize.INTEGER,
+  //   references: {
+  //     model: User,
+  //     key: 'id',
+  //   },
+  //   comment: 'The user who created this',
+  // },
   status: {
     type: Sequelize.STRING(2),
     defaultValue: PropertyStatus.DEFAULT,
