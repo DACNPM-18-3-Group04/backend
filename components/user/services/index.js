@@ -2,6 +2,8 @@ const handleRegister = require('./register.service');
 const handleActivateAccount = require('./activate.service');
 const handleUpdateAccount = require('./update.service');
 const handleGetInfo = require('./fetch.service');
+const handleAddRemoveUserWishList = require('./addremovewishlist.service');
+const handleGetWishlist = require('./getwishlist.service');
 
 // Admin services
 const handleListUser = require('./list.admin.service');
@@ -13,6 +15,8 @@ module.exports = {
   handleActivateAccount,
   handleUpdateAccount,
   handleGetInfo,
+  handleAddRemoveUserWishList,
+  handleGetWishlist,
 
   // Admin services
   handleListUser,

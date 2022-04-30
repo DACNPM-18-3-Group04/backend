@@ -147,11 +147,59 @@ const handleAdminGetUserInfo = async (req, res) => {
     });
 };
 
+const handleAddRemoveUserWishList = (req, res) => {
+  const params = {
+    user: req.user,
+    ...req.body,
+  };
+  
+  UserService.handleAddRemoveUserWishList(params)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Cập nhật wishlist thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: [],
+        message: err.message,
+      });
+    });
+};
+
+const handleGetWishlist = (req, res) => {
+  const params = {
+    user: req.user,
+    ...req.body,
+  };
+  
+  UserService.handleGetWishlist(params)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Get user wishlist thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: [],
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
   handleRegister,
   handleActivateAccount,
   handleUpdateAccount,
   handleGetInfo,
+  handleAddRemoveUserWishList,
+  handleGetWishlist,
 
   //Admin controllers
   handleListUser,

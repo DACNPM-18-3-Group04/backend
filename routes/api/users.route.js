@@ -11,4 +11,8 @@ router.post('/update', auth, UserController.handleUpdateAccount);
 
 router.get('/info', auth, UserController.handleGetInfo);
 
+router.post('/wishlist', auth, UserController.handleAddRemoveUserWishList);
+
+router.get('/wishlist', auth, UserController.handleGetWishlist);
+
 module.exports = router;
