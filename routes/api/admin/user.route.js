@@ -9,4 +9,6 @@ router.get('/:id', auth, UserController.handleAdminGetUserInfo);
 
 router.put('/:id', auth, UserController.handleAdminUpdateUser);
 
+router.post('/', auth, UserController.handleAdminRegiserUserAccount);
+
 module.exports = router;
