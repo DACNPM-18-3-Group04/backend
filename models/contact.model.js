@@ -12,13 +12,13 @@ const Contact = db.define(tableName, {
     autoIncrement: true,
     primaryKey: true,
   },
-  property_id: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: Property,
-      key: 'id',
-    },
-  },
+  // property_id: {
+  //   type: Sequelize.INTEGER,
+  //   references: {
+  //     model: Property,
+  //     key: 'id',
+  //   },
+  // },
   contact_user: {
     type: Sequelize.INTEGER,
     references: {
