@@ -41,7 +41,32 @@ const handleGetListContact = (req, res) => {
     });
 };
 
+const handleSendReview = (req, res) => {
+  ContactServices.handleSendReview({
+    userID: req.user.id,
+    content: req.body.content,
+    rating: req.body.rating,
+    propertyID: req.query.property_id,
+  })
+    .then((rv) =>
+      res.status(201).json({
+        success: true,
+        data: rv,
+        message: 'Gửi đánh giá thành công',
+      }),
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
   handleSendContact,
   handleGetListContact,
+  handleSendReview,
 };
