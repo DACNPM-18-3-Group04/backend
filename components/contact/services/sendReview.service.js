@@ -24,13 +24,16 @@ const handleSendReview = async ({ userID, propertyID, rating, content }) => {
       where: {
         contact_id: contact.id,
       },
+      raw: true,
     }),
   );
   if (err2) throw err2;
 
+  // console.log(review);
   if (isEmpty(review)) {
     // create new review
     const newReview = await Review.create({
+      contact_id: contact.id,
       review: content,
       rating: rating,
     });

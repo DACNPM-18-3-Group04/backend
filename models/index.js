@@ -45,6 +45,10 @@ UserWishlist.belongsTo(Property, {
   foreignKey: 'property_id',
   constraints: false,
 });
+Property.hasMany(UserWishlist, {
+  foreignKey: 'property_id',
+  constraints: false,
+});
 
 // Setting up relationships
 
