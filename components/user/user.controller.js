@@ -175,7 +175,7 @@ const handleAddRemoveUserWishList = (req, res) => {
     user: req.user,
     ...req.body,
   };
-  
+
   UserService.handleAddRemoveUserWishList(params)
     .then((data) =>
       res.status(200).send({
@@ -198,7 +198,7 @@ const handleGetWishlist = (req, res) => {
     user: req.user,
     ...req.body,
   };
-  
+
   UserService.handleGetWishlist(params)
     .then((data) =>
       res.status(200).send({
