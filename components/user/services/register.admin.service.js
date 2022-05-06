@@ -29,9 +29,22 @@ const handleAdminRegiserUserAccount = async (params) => {
   }
   // Validate user admin permission
 
-  // Validate password
+  // Validate email/username
   if (isEmpty(params.email)) {
     throw new Error('Vui lòng truyền email/username');
+  }
+
+  let [chk_email, chk_email_err] = await handle(
+    UserModel.findOne({
+      where: {
+        email: params.email,
+      },
+    }),
+  );
+  if (chk_email_err) throw chk_email_err;
+
+  if (!isEmpty(chk_email)) {
+    throw new Error('Đã tồn tại email/username');
   }
 
   // Validate password
