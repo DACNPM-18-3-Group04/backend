@@ -9,6 +9,7 @@ const handleGetWishlist = require('./getwishlist.service');
 const handleListUser = require('./list.admin.service');
 const handleAdminUpdateUser = require('./update.admin.service');
 const handleAdminGetUserInfo = require('./get.admin.service');
+const handleAdminRegiserUserAccount = require('./register.admin.service');
 
 module.exports = {
   handleRegister,
@@ -22,4 +23,5 @@ module.exports = {
   handleListUser,
   handleAdminUpdateUser,
   handleAdminGetUserInfo,
+  handleAdminRegiserUserAccount,
 };

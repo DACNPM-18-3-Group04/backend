@@ -20,6 +20,29 @@ const handleRegister = (req, res) => {
     });
 };
 
+const handleAdminRegiserUserAccount = (req, res) => {
+  const params = {
+    user: req.user,
+    ...req.body,
+  };
+  UserService.handleAdminRegiserUserAccount(params)
+    .then((data) =>
+      res.status(201).json({
+        success: true,
+        data: data,
+        message: 'Tạo tài khoản thành công',
+      }),
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
 const handleActivateAccount = (req, res) => {
   let params = req.body;
   UserService.handleActivateAccount(params)
@@ -205,4 +228,5 @@ module.exports = {
   handleListUser,
   handleAdminUpdateUser,
   handleAdminGetUserInfo,
+  handleAdminRegiserUserAccount,
 };
