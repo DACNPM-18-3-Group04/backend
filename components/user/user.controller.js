@@ -21,13 +21,16 @@ const handleRegister = (req, res) => {
 };
 
 const handleAdminRegiserUserAccount = (req, res) => {
-  let params = req.body;
-  UserService.handleRegister(params)
+  const params = {
+    user: req.user,
+    ...req.body,
+  };
+  UserService.handleAdminRegiserUserAccount(params)
     .then((data) =>
       res.status(201).json({
         success: true,
         data: data,
-        message: 'Đăng ký tài khoản thành công',
+        message: 'Tạo tài khoản thành công',
       }),
     )
     .catch((err) => {

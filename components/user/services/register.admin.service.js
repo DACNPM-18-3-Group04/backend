@@ -4,14 +4,34 @@ const {
 } = require('../../../models');
 const { handle, isEmpty } = require('../../../utils/helpers');
 const { hashPassword } = require('../../../utils/auth');
+const UserRepository = require('../repository');
 const AccountTypes = require('../../../configs/constants/accountType');
 const AccountStatus = require('../../../configs/constants/accountStatus');
-const genOneTimeCode = require('./genOneTimeCode.service');
 
 const handleAdminRegiserUserAccount = async (params) => {
   // Validate user admin permission
   if (isEmpty(params.user)) {
     throw new Error('Không có quyền thực hiện hành động này');
+  }
+
+  const userId = params.user.id;
+  const [checkUser, errCheckUser] = await handle(
+    UserRepository.getById(userId),
+  );
+
+  if (errCheckUser) throw errCheckUser;
+  if (
+    isEmpty(checkUser) ||
+    checkUser.status !== AccountStatus.ACTIVE ||
+    checkUser.account_type !== AccountTypes.ADMIN
+  ) {
+    throw new Error('Không có quyền thực hiện hành động này');
+  }
+  // Validate user admin permission
+
+  // Validate password
+  if (isEmpty(params.email)) {
+    throw new Error('Vui lòng truyền email/username');
   }
 
   // Validate password
@@ -29,11 +49,11 @@ const handleAdminRegiserUserAccount = async (params) => {
     );
   }
 
-  // Generate one time used code
-  let [ot_code, err_ot_code] = await handle(genOneTimeCode());
-  if (err_ot_code) {
-    console.log(err_ot_code);
-    throw err_ot_code;
+  // Validate status
+  if (!isEmpty(params.account_type)) {
+    if (!AccountTypes.isValid(params.account_type)) {
+      throw new Error('Loại tài khoản không hợp lệ');
+    }
   }
 
   const passwordHash = hashPassword(params.password);
@@ -44,9 +64,8 @@ const handleAdminRegiserUserAccount = async (params) => {
     fullname: params.fullname || params.email,
     contact_email: params.email,
     contact_number: params.contact_number || '',
-    account_type: AccountTypes.NORMAL,
-    status: AccountStatus.INACTIVATED,
-    token: ot_code,
+    account_type: params.account_type || AccountTypes.NORMAL,
+    status: AccountStatus.ACTIVE,
   };
 
   let [new_user, new_user_err] = await handle(
