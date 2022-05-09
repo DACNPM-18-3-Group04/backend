@@ -7,6 +7,7 @@ const { District, Province } = require('./propertyLocation');
 const Contact = require('./contact.model');
 const Review = require('./review.model');
 const UserWishlist = require('./userwishlist.model');
+const ReviewReport = require('./reviewReport.model');
 
 // Setting up relationships
 
@@ -50,6 +51,15 @@ Property.hasMany(UserWishlist, {
   constraints: false,
 });
 
+Review.hasOne(ReviewReport, {
+  foreignKey: 'review_id',
+  constraints: false,
+});
+ReviewReport.belongsTo(Review, {
+  foreignKey: 'review_id',
+  constraints: false,
+});
+
 // Setting up relationships
 
 module.exports = {
@@ -60,4 +70,5 @@ module.exports = {
   Contact,
   Review,
   UserWishlist,
+  ReviewReport,
 };

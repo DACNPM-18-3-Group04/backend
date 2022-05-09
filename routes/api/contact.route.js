@@ -10,4 +10,8 @@ router.get('/list', auth, ContactController.handleGetListContact);
 
 router.post('/review', auth, ContactController.handleSendReview);
 
+router.get('/reviews', auth, ContactController.handleGetReviews);
+
+router.post('/report', auth, ContactController.handleReportReview);
+
 module.exports = router;

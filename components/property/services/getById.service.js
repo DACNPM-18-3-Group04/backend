@@ -1,32 +1,22 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-plusplus */
-const sequelize = require('sequelize');
+const { Op } = require('sequelize');
+const sequelize = require('../../../configs/database');
 const {
-  Property: propertyModel,
+  Property,
   District,
   Province,
   User,
+  UserWishlist,
   Contact,
   Review,
-  UserWishlist,
+  ReviewReport,
 } = require('../../../models');
 
 const handleGetPropertyById = async ({ id, userID }) => {
-  const property = await propertyModel.findOne({
+  const property = await Property.findOne({
     where: {
       id: id,
-    },
-    attributes: {
-      include: [
-        [
-          sequelize.fn('AVG', sequelize.col('contacts.review.rating')),
-          'total_rating',
-        ],
-        [
-          sequelize.fn('COUNT', sequelize.col('contacts.id')),
-          'rating_accumulator',
-        ],
-      ],
     },
     include: [
       {
@@ -48,18 +38,6 @@ const handleGetPropertyById = async ({ id, userID }) => {
         required: false,
       },
       {
-        model: Contact,
-        required: false,
-        attributes: [],
-        include: [
-          {
-            model: Review,
-            required: false,
-            attributes: [],
-          },
-        ],
-      },
-      {
         model: UserWishlist,
         required: false,
         attributes: ['status'],
@@ -68,7 +46,6 @@ const handleGetPropertyById = async ({ id, userID }) => {
         },
       },
     ],
-    group: ['property.id'],
     // logging: console.log,
   });
 
@@ -76,7 +53,52 @@ const handleGetPropertyById = async ({ id, userID }) => {
     throw 'Not found';
   }
 
-  return { property };
+  // get rating for the author of this property
+  const author_reviews = await Property.findAll({
+    where: {
+      author_id: property.author_id,
+    },
+    attributes: [
+      'id',
+      [
+        sequelize.fn('AVG', sequelize.col('contacts.review.rating')),
+        'total_rating',
+      ],
+      [
+        sequelize.fn('COUNT', sequelize.col('contacts.id')),
+        'rating_accumulator',
+      ],
+    ],
+    include: [
+      {
+        model: Contact,
+        attributes: ['id'],
+        include: [
+          {
+            model: Review,
+            attributes: ['rating'],
+            include: [
+              {
+                model: ReviewReport,
+                attributes: ['id', 'status'],
+                where: {
+                  // not counting invalid review
+                  status: { [Op.not]: 'E' },
+                },
+                required: false,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    raw: true,
+  });
+
+  return {
+    reviews: author_reviews.length && author_reviews[0],
+    property,
+  };
 };
 
 module.exports = handleGetPropertyById;
