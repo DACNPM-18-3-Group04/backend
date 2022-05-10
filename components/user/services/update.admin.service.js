@@ -6,14 +6,13 @@ const AccountType = require('../../../configs/constants/accountType');
 const AuthService = require('../../auth/services');
 
 require('dotenv').config();
-const onCallMServiceFail = (err) => {
-  console.log(process.env.AUTH_MSERVICE_BLOCK_ON_FAIL);
-  if (process.env.AUTH_MSERVICE_BLOCK_ON_FAIL) {
-    const errMessage =
-      'Lỗi cập nhật trạng thái tài khoản. Vui lòng thử lại sau';
-    throw new Error(errMessage);
-  }
-  console.log(err);
+const onCallMServiceFail = () => {
+  // console.log(process.env.AUTH_MSERVICE_BLOCK_ON_FAIL);
+  // if (process.env.AUTH_MSERVICE_BLOCK_ON_FAIL) {
+  const errMessage = 'Lỗi cập nhật trạng thái tài khoản. Vui lòng thử lại sau';
+  throw new Error(errMessage);
+  // }
+  // console.log(err);
 };
 
 const handleAdminUpdateUserAccount = async (params) => {
@@ -78,13 +77,13 @@ const handleAdminUpdateUserAccount = async (params) => {
 
   const newStatus = params.status;
   if (newStatus && AccountStatus.isValid(newStatus)) {
-    if (newStatus === AccountStatus.INACTIVATED) {
-      const res = await AuthService.handleUnban({ userId });
+    if (newStatus === AccountStatus.DISABLED) {
+      const res = await AuthService.handleBan({ userId: updatedUserId });
       if (!res.success) {
         onCallMServiceFail();
       }
     } else {
-      const res = await AuthService.handleBan({ userId });
+      const res = await AuthService.handleUnban({ userId: updatedUserId });
       if (!res.success) {
         onCallMServiceFail();
       }

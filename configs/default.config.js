@@ -15,7 +15,7 @@ module.exports = {
   },
 
   auth_mservice: {
-    host: process.env.AUTH_MSERVICE_HOST || 'localhost:50010',
+    host: process.env.AUTH_MSERVICE_HOST || 'http://localhost:50010',
     auth_header: 'authorization',
     secret_key: process.env.AUTH_MSERVICE_KEY || 'DEFAULT_SECRET_KEY',
   },

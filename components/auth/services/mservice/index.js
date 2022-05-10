@@ -1,13 +1,14 @@
 // Authorization microservice wrapper
-const client = require('./client.grpc.mservice');
+const clientGRPC = require('./client.grpc.mservice');
+const clientREST = require('./client.rest.mservice');
 const { metadata } = require('./helper');
 const { handle } = require('../../../../utils/helpers');
 
-const isAuthorized = async (userId = '') => {
+const isAuthorizedGRPC = async (userId = '') => {
   // console.log(userId);
   // eslint-disable-next-line no-unused-vars
   const promise = new Promise((resolve, reject) => {
-    client.isAuthorized({ userID: userId }, metadata, (err, data) => {
+    clientGRPC.isAuthorized({ userID: userId }, metadata, (err, data) => {
       if (err) {
         console.log('Error');
         console.log(err);
@@ -34,11 +35,11 @@ const isAuthorized = async (userId = '') => {
   };
 };
 
-const banUser = async (userId = '') => {
+const banUserGRPC = async (userId = '') => {
   //console.log(userId);
   // eslint-disable-next-line no-unused-vars
   const promise = new Promise((resolve, reject) => {
-    client.banUser({ userID: userId }, metadata, (err, data) => {
+    clientGRPC.banUser({ userID: userId }, metadata, (err, data) => {
       if (err) {
         console.log(err);
         resolve({
@@ -58,11 +59,11 @@ const banUser = async (userId = '') => {
   };
 };
 
-const unbanUser = async (userId = '') => {
+const unbanUserGRPC = async (userId = '') => {
   //console.log(userId);
   // eslint-disable-next-line no-unused-vars
   const promise = new Promise((resolve, reject) => {
-    client.banUser({ userID: userId }, metadata, (err, data) => {
+    clientGRPC.banUser({ userID: userId }, metadata, (err, data) => {
       if (err) {
         console.log(err);
         resolve({
@@ -79,13 +80,59 @@ const unbanUser = async (userId = '') => {
   const [res] = await handle(promise);
   return {
     success: res.success,
+  };
+};
+
+const isAuthorizedREST = async (userId = '') => {
+  const [auth, errAuth] = await handle(clientREST.isAuthorized({ userId }));
+  if (errAuth) {
+    console.log(errAuth);
+    return {
+      authorized: false,
+    };
+  }
+
+  return {
+    authorized: auth.data.data.authorized,
+  };
+};
+
+const banUserREST = async (userId = '') => {
+  const [auth, errAuth] = await handle(clientREST.banUser({ userId }));
+  if (errAuth) {
+    console.log(errAuth);
+    return {
+      success: false,
+    };
+  }
+
+  return {
+    success: auth.data.data.success,
+  };
+};
+
+const unbanUserREST = async (userId = '') => {
+  const [auth, errAuth] = await handle(clientREST.unbanUser({ userId }));
+  if (errAuth) {
+    console.log(errAuth);
+    return {
+      success: false,
+    };
+  }
+  console.log(userId);
+  console.log(auth.data);
+  return {
+    success: auth.data.data.success,
   };
 };
 
 const AuthMService = {
-  isAuthorized,
-  banUser,
-  unbanUser,
+  isAuthorized: isAuthorizedREST,
+  banUser: banUserREST,
+  unbanUser: unbanUserREST,
+  isAuthorizedGRPC,
+  banUserGRPC,
+  unbanUserGRPC,
 };
 
 module.exports = AuthMService;
