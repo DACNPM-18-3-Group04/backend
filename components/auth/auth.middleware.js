@@ -17,7 +17,7 @@ const auth = async function (req, res, next) {
 
     const userId = user.id;
     const [data, errAuth] = await handle(checkAuthorization({ userId }));
-    console.log(data);
+    // console.log(data);
     if (errAuth) {
       console.log(errAuth);
     }

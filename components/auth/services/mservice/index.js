@@ -1,5 +1,5 @@
 // Authorization microservice wrapper
-const client = require('./client.mservice');
+const client = require('./client.grpc.mservice');
 const { metadata } = require('./helper');
 const { handle } = require('../../../../utils/helpers');
 
@@ -9,6 +9,7 @@ const isAuthorized = async (userId = '') => {
   const promise = new Promise((resolve, reject) => {
     client.isAuthorized({ userID: userId }, metadata, (err, data) => {
       if (err) {
+        console.log('Error');
         console.log(err);
         // Temporarily give authorization if err
         resolve({

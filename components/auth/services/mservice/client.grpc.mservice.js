@@ -11,6 +11,12 @@ const { AuthService } = grpc.loadPackageDefinition(packageDefinition);
 const AuthMServiceClient = new AuthService(
   Auth.host,
   grpc.credentials.createInsecure(),
+  // grpc.credentials.createSsl(),
+  {
+    'grpc.keepalive_time_ms': 5000,
+    'grpc.keepalive_timeout_ms': 5000,
+    'grpc.keepalive_permit_without_calls': 1,
+  },
 );
 
 module.exports = AuthMServiceClient;
