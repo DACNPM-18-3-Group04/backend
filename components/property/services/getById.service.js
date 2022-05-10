@@ -65,7 +65,7 @@ const handleGetPropertyById = async ({ id, userID }) => {
         'total_rating',
       ],
       [
-        sequelize.fn('COUNT', sequelize.col('contacts.id')),
+        sequelize.fn('COUNT', sequelize.col('contacts.review.id')),
         'rating_accumulator',
       ],
     ],
