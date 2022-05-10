@@ -1,6 +1,8 @@
 let appRoot = require('app-root-path');
 const path = require('path');
 
+require('dotenv').config();
+
 const DefaultConfig = require('./utils/index');
 
 module.exports = {
@@ -10,6 +12,12 @@ module.exports = {
     env: 'local',
     secret_key: DefaultConfig.getSecretKey(),
     auth_header: 'Authorization',
+  },
+
+  auth_mservice: {
+    host: process.env.AUTH_MSERVICE_HOST || 'localhost:50010',
+    auth_header: 'authorization',
+    secret_key: process.env.AUTH_MSERVICE_KEY || 'DEFAULT_SECRET_KEY',
   },
 
   temp_file_path: path.join(`${appRoot}`, './public/tempt'),
