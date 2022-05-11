@@ -88,7 +88,7 @@ const isAuthorizedREST = async (userId = '') => {
   if (errAuth) {
     console.log(errAuth);
     return {
-      authorized: false,
+      authorized: true,
     };
   }
 
@@ -119,8 +119,8 @@ const unbanUserREST = async (userId = '') => {
       success: false,
     };
   }
-  console.log(userId);
-  console.log(auth.data);
+  // console.log(userId);
+  // console.log(auth.data);
   return {
     success: auth.data.data.success,
   };
