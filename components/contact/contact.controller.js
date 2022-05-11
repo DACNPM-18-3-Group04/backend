@@ -65,8 +65,53 @@ const handleSendReview = (req, res) => {
     });
 };
 
+const handleGetReviews = (req, res) => {
+  ContactServices.handleGetReviews(req.query.property_id)
+    .then((r) =>
+      res.status(201).json({
+        success: true,
+        data: r,
+        message: 'Lấy danh sách đánh giá thành công',
+      }),
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
+const handleReportReview = (req, res) => {
+  ContactServices.handleReportReview({
+    propertyID: req.query.property_id,
+    reason: req.body.reason,
+    reviewID: req.query.review_id,
+    userID: req.user.id,
+  })
+    .then((ok) =>
+      res.status(201).json({
+        success: true,
+        data: ok,
+        message: 'Gửi báo cáo thành công',
+      }),
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
   handleSendContact,
   handleGetListContact,
   handleSendReview,
+  handleGetReviews,
+  handleReportReview,
 };
