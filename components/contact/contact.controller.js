@@ -132,7 +132,29 @@ const handleAdminGetReviewsReported = (req, res) => {
     });
 };
 
+const handleAdminRemoveReviewReported = (req, res) => {
+  const params = {
+    user: req.user,
+    query: req.query,
+    ...req.body,
+  };
 
+  ContactServices.handleRemoveReviewReported(params)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: "OK",
+        message: 'Xoá đánh giá thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: [],
+        message: err.message,
+      });
+    });
+};
 
 
 module.exports = {
@@ -144,4 +166,5 @@ module.exports = {
 
   //Admin controllers
   handleAdminGetReviewsReported,
+  handleAdminRemoveReviewReported,
 };
