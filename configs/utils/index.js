@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 require('dotenv').config(); //Add .env file variable to process.env
 const DefaultMailConfig = require('./mail.default');
 

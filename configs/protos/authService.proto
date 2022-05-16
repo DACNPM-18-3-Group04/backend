@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message User {
+  string userID = 1;
+}
+
+message AuthResponse {
+  bool authorized = 1;
+}
+
+message BooleanResponse {
+  bool success = 1;
+}
+
+service AuthService {
+  rpc IsAuthorized (User) returns (AuthResponse);
+  rpc BanUser (User) returns (BooleanResponse);
+  rpc UnbanUser (User) returns (BooleanResponse);
+}
