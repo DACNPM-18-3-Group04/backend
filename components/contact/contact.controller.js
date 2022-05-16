@@ -108,10 +108,62 @@ const handleReportReview = (req, res) => {
     });
 };
 
+const handleAdminGetReviewsReported = (req, res) => {
+  const params = {
+    user: req.user,
+    query: req.query,
+    ...req.body,
+  };
+
+  ContactServices.handleGetReviewsReported(params)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Lấy danh sách đánh giá bị báo xấu thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: [],
+        message: err.message,
+      });
+    });
+};
+
+const handleAdminRemoveReviewReported = (req, res) => {
+  const params = {
+    user: req.user,
+    query: req.query,
+    ...req.body,
+  };
+
+  ContactServices.handleUpdateReportedStatus(params)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Cập nhật đánh giá thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: [],
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
   handleSendContact,
   handleGetListContact,
   handleSendReview,
   handleGetReviews,
   handleReportReview,
+
+  //Admin controllers
+  handleAdminGetReviewsReported,
+  handleAdminRemoveReviewReported,
 };

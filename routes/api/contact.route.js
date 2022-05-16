@@ -14,4 +14,16 @@ router.get('/reviews', auth, ContactController.handleGetReviews);
 
 router.post('/report', auth, ContactController.handleReportReview);
 
+router.get(
+  '/review/report/all',
+  auth,
+  ContactController.handleAdminGetReviewsReported,
+);
+
+router.put(
+  '/review/report',
+  auth,
+  ContactController.handleAdminRemoveReviewReported,
+);
+
 module.exports = router;

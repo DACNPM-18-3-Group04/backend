@@ -31,11 +31,11 @@ Contact.belongsTo(User, {
 
 Contact.belongsTo(Property, {
   foreignKey: 'property_id',
-  constraints: false,
+  // constraints: false,
 });
 Property.hasMany(Contact, {
   foreignKey: 'property_id',
-  constraints: false,
+  // constraints: false,
 });
 
 UserWishlist.belongsTo(User, {
