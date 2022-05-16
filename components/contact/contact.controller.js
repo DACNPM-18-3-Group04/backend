@@ -139,12 +139,12 @@ const handleAdminRemoveReviewReported = (req, res) => {
     ...req.body,
   };
 
-  ContactServices.handleRemoveReviewReported(params)
+  ContactServices.handleUpdateReportedStatus(params)
     .then((data) =>
       res.status(200).send({
         success: true,
-        data: "OK",
-        message: 'Xoá đánh giá thành công',
+        data: data,
+        message: 'Cập nhật đánh giá thành công',
       }),
     )
     .catch((err) => {
@@ -155,7 +155,6 @@ const handleAdminRemoveReviewReported = (req, res) => {
       });
     });
 };
-
 
 module.exports = {
   handleSendContact,

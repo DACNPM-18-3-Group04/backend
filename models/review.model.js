@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../configs/database');
 const Contact = require('./contact.model');
+const ReviewStatus = require('../configs/constants/review/reviewStatus');
 
 const tableName = 'review';
 
@@ -31,7 +32,7 @@ const Review = db.define(tableName, {
   },
   status: {
     type: Sequelize.STRING(2),
-    defaultValue: '',
+    defaultValue: ReviewStatus.DEFAULT,
   },
 });
 

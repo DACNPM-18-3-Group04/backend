@@ -1,11 +1,8 @@
 const {
+  //
   ReviewReport,
   Review,
-  Contact,
-  User,
-  Property,
 } = require('../../../models');
-const { Op } = require('sequelize');
 const { isEmpty, handle } = require('../../../utils/helpers');
 const UserRepository = require('../../user/repository');
 const AccountStatus = require('../../../configs/constants/accountStatus');
@@ -13,9 +10,7 @@ const AccountType = require('../../../configs/constants/accountType');
 const ReviewStatus = require('../../../configs/constants/review/reviewStatus');
 const ReviewReportStatus = require('../../../configs/constants/review/reviewReportStatus');
 
-const handleGetReviewReports = async (params) => {
-  console.log('handleGetReviewReports');
-
+const handleUpdateReportStatus = async (params) => {
   // Validate user admin permission
   if (isEmpty(params.user)) {
     throw new Error('Không có quyền thực hiện hành động này');
@@ -27,7 +22,7 @@ const handleGetReviewReports = async (params) => {
   );
 
   if (errCheckAdmin) throw errCheckAdmin;
-  console.log(checkUser);
+
   if (
     isEmpty(checkUser) ||
     checkUser.status !== AccountStatus.ACTIVE ||
@@ -68,26 +63,37 @@ const handleGetReviewReports = async (params) => {
     throw new Error('Không tìm thấy đánh giá');
   }
 
-  // Update Review
-  let [reviewUpdated, errReviewUpdated] = await handle(
-    Review.update(
-      {
-        status: ReviewStatus.DELETED,
-      },
-      {
-        where: {
-          id: review.id,
-        },
-      },
-    ),
-  );
-  if (errReviewUpdated) throw errReviewUpdated;
+  const reportUpdatedStatus = params.status;
+  if (isEmpty(reportUpdatedStatus)) {
+    throw new Error('Không có trạng thái mới để cập nhật');
+  }
 
-  // Update Report
+  if (reportUpdatedStatus === ReviewReportStatus.EXECUTED) {
+    // Update Review
+    // eslint-disable-next-line no-unused-vars
+    let [reviewUpdated, errReviewUpdated] = await handle(
+      Review.update(
+        {
+          status: ReviewStatus.DELETED,
+        },
+        {
+          where: {
+            id: review.id,
+          },
+        },
+      ),
+    );
+    if (errReviewUpdated) throw errReviewUpdated;
+  } else if (reportUpdatedStatus !== ReviewReportStatus.SKIPPED) {
+    throw new Error('Trạng thái cập nhật không hợp lệ');
+  }
+
+  // Update Review report
+  // eslint-disable-next-line no-unused-vars
   let [reportUpdated, errReportUpdated] = await handle(
-    Review.update(
+    ReviewReport.update(
       {
-        status: ReviewReportStatus.EXECUTED,
+        status: reportUpdatedStatus,
       },
       {
         where: {
@@ -101,4 +107,4 @@ const handleGetReviewReports = async (params) => {
   return {};
 };
 
-module.exports = handleGetReviewReports;
+module.exports = handleUpdateReportStatus;

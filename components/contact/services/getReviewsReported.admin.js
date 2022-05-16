@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const {
   ReviewReport,
   Review,
@@ -5,7 +6,6 @@ const {
   User,
   Property,
 } = require('../../../models');
-const { Op } = require('sequelize');
 const { isEmpty, handle } = require('../../../utils/helpers');
 const UserRepository = require('../../user/repository');
 const AccountStatus = require('../../../configs/constants/accountStatus');
@@ -27,7 +27,7 @@ const handleGetReviewReports = async (params) => {
   );
 
   if (errCheckAdmin) throw errCheckAdmin;
-  console.log(checkUser);
+
   if (
     isEmpty(checkUser) ||
     checkUser.status !== AccountStatus.ACTIVE ||
@@ -47,16 +47,15 @@ const handleGetReviewReports = async (params) => {
           {
             model: Contact,
             as: 'contact',
-            required: false,
+            required: true,
             include: [
               {
                 model: User,
                 as: 'user',
                 required: false,
                 attributes: [
+                  //
                   'id',
-                  'contact_email',
-                  'contact_number',
                   'avatar',
                   'fullname',
                 ],
@@ -70,9 +69,8 @@ const handleGetReviewReports = async (params) => {
                   as: 'user',
                   required: false,
                   attributes: [
+                    //
                     'id',
-                    'contact_email',
-                    'contact_number',
                     'avatar',
                     'fullname',
                   ],
@@ -88,14 +86,14 @@ const handleGetReviewReports = async (params) => {
       },
       //ReviewReport filter
       where: {
-        status: { [Op.not]: ReviewReportStatus.EXECUTED },
+        status: ReviewReportStatus.PENDING,
       },
     }),
   );
   if (errReportsAll) throw errReportsAll;
 
   return {
-    ...reportsAll,
+    reports: reportsAll,
   };
 };
 

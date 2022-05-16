@@ -1,11 +1,9 @@
-const PENDING = 'P';
-const VIEWED = 'V';
+const ACTIVE = 'A';
 const DELETED = 'D';
-const DEFAULT = PENDING;
+const DEFAULT = ACTIVE;
 
 module.exports = {
-  PENDING,
-  VIEWED,
+  ACTIVE,
   DEFAULT,
   DELETED,
 };

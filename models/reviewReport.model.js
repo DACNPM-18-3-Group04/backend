@@ -16,7 +16,8 @@ const ReviewReport = db.define(tableName, {
   status: {
     type: Sequelize.STRING(2),
     defaultValue: 'P',
-    comment: 'P: pending - E: executed',
+    comment:
+      'P: pending - S: skipped, review unchanged - E: executed, review removed',
   },
 });
 
