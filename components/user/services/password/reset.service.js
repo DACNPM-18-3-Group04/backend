@@ -45,7 +45,7 @@ async function handlePasswordReset(params, accountType = AccountType.NORMAL) {
 
   const passwordHash = hashPassword(params.password);
   let _params_update = {
-    ot_code: null, // Consume one time code
+    token: null, // Consume one time code (token)
     password: passwordHash,
   };
 
