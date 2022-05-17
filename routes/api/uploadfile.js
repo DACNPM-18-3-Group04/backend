@@ -22,6 +22,7 @@ const {
   // handleUploadfile,
   handleUploadAvatar,
   handleUploadPropertyImage,
+  handleRemovePropertyImage,
 } = require('../../components/uploadfile/uploadfile.controller');
 
 // router.post('/file', auth, upload.single('file'), handleUploadfile);
@@ -34,5 +35,7 @@ router.post(
   upload.single('image'),
   handleUploadPropertyImage,
 );
+
+router.post('/property-image/remove', auth, handleRemovePropertyImage);
 
 module.exports = router;
