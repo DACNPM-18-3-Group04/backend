@@ -15,4 +15,9 @@ router.post('/wishlist', auth, UserController.handleAddRemoveUserWishList);
 
 router.get('/wishlist', auth, UserController.handleGetWishlist);
 
+// Password related routes
+router.get('/password/verify-reset', UserController.handleVerifyResetToken);
+router.post('/password/forgot', UserController.handleForgotPassword);
+router.post('/password/reset', UserController.handlePasswordReset);
+
 module.exports = router;

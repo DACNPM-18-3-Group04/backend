@@ -11,6 +11,11 @@ const handleAdminUpdateUser = require('./update.admin.service');
 const handleAdminGetUserInfo = require('./get.admin.service');
 const handleAdminRegiserUserAccount = require('./register.admin.service');
 
+// Password services
+const handleForgotPassword = require('./password/forgot.service');
+const handlePasswordReset = require('./password/reset.service');
+const handleVerifyResetToken = require('./password/verifyReset.service');
+
 module.exports = {
   handleRegister,
   handleActivateAccount,
@@ -24,4 +29,9 @@ module.exports = {
   handleAdminUpdateUser,
   handleAdminGetUserInfo,
   handleAdminRegiserUserAccount,
+
+  // Password services
+  handleForgotPassword,
+  handlePasswordReset,
+  handleVerifyResetToken,
 };
