@@ -216,6 +216,73 @@ const handleGetWishlist = (req, res) => {
     });
 };
 
+const handleVerifyResetToken = async (req, res) => {
+  const params = {
+    userid: req.query.userid,
+    otcode: req.query.otcode,
+  };
+
+  UserService.handleVerifyResetToken(params)
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Mã reset hợp lệ',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
+const handleForgotPassword = async (req, res) => {
+  const params = {
+    ...req.body,
+  };
+
+  UserService.handleForgotPassword(params)
+    .then((data) =>
+      res.status(201).send({
+        success: true,
+        data: data,
+        message: 'Tạo yêu cầu reset thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
+const handlePasswordReset = async (req, res) => {
+  const params = {
+    ...req.body,
+  };
+
+  UserService.handlePasswordReset(params)
+    .then((data) =>
+      res.status(201).send({
+        success: true,
+        data: data,
+        message: 'Tạo yêu cầu reset thành công',
+      }),
+    )
+    .catch((err) => {
+      res.status(400).json({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
 module.exports = {
   handleRegister,
   handleActivateAccount,
@@ -229,4 +296,9 @@ module.exports = {
   handleAdminUpdateUser,
   handleAdminGetUserInfo,
   handleAdminRegiserUserAccount,
+
+  //Password controllers
+  handleVerifyResetToken,
+  handleForgotPassword,
+  handlePasswordReset,
 };
