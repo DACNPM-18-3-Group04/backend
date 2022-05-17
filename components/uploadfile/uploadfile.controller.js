@@ -33,6 +33,36 @@ const handleUploadAvatar = (req, res) => {
     });
 };
 
+const handleUploadPropertyImage = (req, res) => {
+  if (!req.file) {
+    res.status(400).send({
+      success: false,
+      data: {},
+      message: 'Lỗi - Không tìm thấy hình ảnh',
+    });
+  }
+  const userId = req.user.id;
+  const { propertyId } = req.query;
+  const tempPath = req.file.path;
+
+  UploadService.uploadPropertyImage({ userId, propertyId, reqFile: req.file })
+    .then((data) =>
+      res.status(200).send({
+        success: true,
+        data: data,
+        message: 'Tải lên thành công',
+      }),
+    )
+    .catch((err) => {
+      fs.unlinkSync(tempPath);
+      res.status(400).send({
+        success: false,
+        data: {},
+        message: err.message,
+      });
+    });
+};
+
 // Old, DO NOT USE
 const handleError = (err, res) => {
   res.status(500).json({
@@ -100,4 +130,5 @@ const handleUploadfile = (req, res) => {
 module.exports = {
   handleUploadfile,
   handleUploadAvatar,
+  handleUploadPropertyImage,
 };

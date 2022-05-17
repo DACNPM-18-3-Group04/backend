@@ -21,10 +21,18 @@ const upload = multer({ storage });
 const {
   // handleUploadfile,
   handleUploadAvatar,
+  handleUploadPropertyImage,
 } = require('../../components/uploadfile/uploadfile.controller');
 
 // router.post('/file', auth, upload.single('file'), handleUploadfile);
 
 router.post('/avatar', auth, upload.single('image'), handleUploadAvatar);
+
+router.post(
+  '/property-image',
+  auth,
+  upload.single('image'),
+  handleUploadPropertyImage,
+);
 
 module.exports = router;
