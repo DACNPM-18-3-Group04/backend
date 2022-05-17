@@ -2,6 +2,7 @@ const { Op } = require('sequelize');
 const {
   //
   Property,
+  PropertyImage,
   District,
   Province,
   User,
@@ -60,6 +61,11 @@ const handleSearchProperty = async (
   const findObj = {
     where: queryObj,
     include: [
+      {
+        model: PropertyImage,
+        as: 'images',
+        attributes: ['id', 'image_link'],
+      },
       {
         model: District,
         include: Province,

@@ -1,7 +1,13 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-plusplus */
 const { Op } = require('sequelize');
-const { User, Property, District, Province } = require('../../../models');
+const {
+  User,
+  Property,
+  District,
+  Province,
+  PropertyImage,
+} = require('../../../models');
 const { isEmpty, handle } = require('../../../utils/helpers');
 const { getQueryMinMaxFloat, getQueryMinMaxInt } = require('./helpers');
 const {
@@ -76,6 +82,11 @@ const handleAdminGetProperty = async (
   const findObj = {
     where: queryObj,
     include: [
+      {
+        model: PropertyImage,
+        as: 'images',
+        attributes: ['id', 'image_link'],
+      },
       {
         model: District,
         include: Province,

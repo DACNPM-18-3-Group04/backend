@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const sequelize = require('../../../configs/database');
 const {
   Property,
+  PropertyImage,
   District,
   Province,
   User,
@@ -19,6 +20,11 @@ const handleGetPropertyById = async ({ id, userID }) => {
       id: id,
     },
     include: [
+      {
+        model: PropertyImage,
+        as: 'images',
+        attributes: ['id', 'image_link'],
+      },
       {
         model: District,
         include: Province,

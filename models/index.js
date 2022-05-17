@@ -3,6 +3,7 @@
  */
 const User = require('./user.model');
 const Property = require('./property.model');
+const PropertyImage = require('./propertyImage.model');
 const { District, Province } = require('./propertyLocation');
 const Contact = require('./contact.model');
 const Review = require('./review.model');
@@ -60,11 +61,17 @@ ReviewReport.belongsTo(Review, {
   constraints: false,
 });
 
+Property.hasMany(PropertyImage, {
+  as: 'images',
+  foreignKey: 'property_id',
+});
+
 // Setting up relationships
 
 module.exports = {
   User,
   Property,
+  PropertyImage,
   District,
   Province,
   Contact,

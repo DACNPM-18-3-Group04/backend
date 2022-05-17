@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const cloudinary = require('cloudinary').v2;
+const uploader = require('./uploader/cloudinary');
 
 const {
   temp_file_path: tempFilePath,
@@ -11,17 +11,19 @@ const uploadImage = async (fileName) => {
   const filePath = path.join(tempFilePath, fileName);
 
   let [res, err] = await handle(
-    cloudinary.uploader.upload(filePath, {
+    uploader.upload(filePath, {
       public_id: fileName,
       folder: 'images',
       unique_filename: false,
       overwrite: true,
     }),
   );
+  // console.log(res);
   if (err) throw err;
   fs.unlinkSync(filePath);
   return {
     link: res.secure_url,
+    public_id: res.public_id,
   };
 };
 
