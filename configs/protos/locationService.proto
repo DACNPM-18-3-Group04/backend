@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package location;
+
+message District {
+  string id = 1;
+  string name = 2;
+  Province province = 3;
+  string provinceId = 4;
+}
+
+message Districts {
+  repeated District items = 1;
+}
+
+message upsertDistrictRequest {
+  string districtName = 1;
+  string provinceId = 2;
+  optional string id = 3;
+}
+
+message upsertedDoc {
+  string id = 1;
+  string name = 2;
+}
+
+message upsertDistrictResponse {
+  upsertedDoc district = 1;
+  optional string message = 2;
+}
+
+message upsertProvinceResponse {
+  upsertedDoc province = 1;
+  optional string message = 2;
+}
+
+message districtRequest {
+  string id = 1;
+}
+
+message removeOutput {
+  bool success = 1;
+  optional string message = 2;
+}
+
+message Province {
+  string id = 1;
+  string name = 2;
+}
+
+message Provinces {
+  repeated Province items = 1;
+}
+
+message upsertProvinceRequest {
+  string provinceName = 1;
+  optional string id = 2;
+}
+
+message provinceRequest {
+  string id = 1;
+}
+
+message Empty {}
+
+service DistrictService {
+  rpc getDistrictById (districtRequest) returns (District);
+  rpc districts (Empty) returns (Districts);
+  rpc upsertDistrict (upsertDistrictRequest) returns (upsertDistrictResponse);
+  rpc removeDistrict (districtRequest) returns (removeOutput);
+}
+
+service ProvinceService {
+  rpc getProvinceById (provinceRequest) returns (Province);
+  rpc provinces (Empty) returns (Provinces);
+  rpc upsertProvince (upsertProvinceRequest) returns (upsertProvinceResponse);
+  rpc removeProvince (provinceRequest) returns (removeOutput);
+}

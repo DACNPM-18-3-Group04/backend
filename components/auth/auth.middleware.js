@@ -31,6 +31,29 @@ const auth = async function (req, res, next) {
   })(req, res, next);
 };
 
+const getUser = (req, res) =>
+  new Promise((resolve, reject) => {
+    passport.authenticate('jwt', { session: false }, async (err, user) => {
+      // console.log(user);
+      if (err || !user) {
+        reject(UnauthorizedResponse);
+      }
+
+      const userId = user.id;
+      const [data, errAuth] = await handle(checkAuthorization({ userId }));
+      // console.log(data);
+      if (errAuth) {
+        reject(errAuth);
+      }
+
+      if (data && !data.authorized) {
+        reject(UnauthorizedResponse);
+      }
+      resolve(user);
+    })(req, res);
+  });
+
 module.exports = {
   auth,
+  getUser,
 };
