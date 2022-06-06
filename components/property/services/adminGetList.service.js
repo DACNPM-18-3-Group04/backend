@@ -15,6 +15,7 @@ const {
 } = require('../../../configs/constants/system');
 const AccountStatus = require('../../../configs/constants/accountStatus');
 const AccountType = require('../../../configs/constants/accountType');
+const UserRepository = require('../../user/repository');
 
 const handleAdminGetProperty = async (
   user,
@@ -26,11 +27,7 @@ const handleAdminGetProperty = async (
     throw new Error('Không có quyền thực hiện hành động này');
   }
   const [checkUser, errCheckUser] = await handle(
-    User.findOne({
-      where: {
-        id: user.id,
-      },
-    }),
+    UserRepository.getById(user.id)
   );
   if (errCheckUser) throw errCheckUser;
   if (

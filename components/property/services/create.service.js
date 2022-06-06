@@ -6,7 +6,8 @@ const {
 const { handle, isEmpty } = require('../../../utils/helpers');
 const AccountStatus = require('../../../configs/constants/accountStatus');
 const PropertyType = require('../../../configs/constants/property/propertyType');
-
+const UserRepository = require('../../user/repository');
+const PropertyRepository = require('../repository')
 const handleCreate = async (params) => {
   // Validate user permission
   const { user } = params;
@@ -15,11 +16,7 @@ const handleCreate = async (params) => {
   }
 
   let [checkUser, errCheckUser] = await handle(
-    UserModel.findOne({
-      where: {
-        id: user.id,
-      },
-    }),
+    UserRepository.getById(user.id)
   );
   if (errCheckUser) throw errCheckUser;
   if (isEmpty(checkUser) || checkUser.status !== AccountStatus.ACTIVE) {
@@ -64,7 +61,7 @@ const handleCreate = async (params) => {
   };
 
   let [newProperty, errNewProperty] = await handle(
-    Property.create(paramsNewProperty),
+    PropertyRepository.createProperty(paramsNewProperty)
   );
   if (errNewProperty) throw errNewProperty;
 

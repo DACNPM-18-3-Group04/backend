@@ -8,7 +8,8 @@ const AccountStatus = require('../../../configs/constants/accountStatus');
 const PropertyType = require('../../../configs/constants/property/propertyType');
 const AccountType = require('../../../configs/constants/accountType');
 const PropertyStatus = require('../../../configs/constants/property/propertyStatus');
-
+const UserRepository = require('../../user/repository');
+const PropertyRepository = require('../repository');
 const handleUpdateProperty = async (params) => {
   // Validate user permission
   const { user } = params;
@@ -17,11 +18,7 @@ const handleUpdateProperty = async (params) => {
   }
 
   let [checkUser, errCheckUser] = await handle(
-    UserModel.findOne({
-      where: {
-        id: user.id,
-      },
-    }),
+    UserRepository.getById(user.id)
   );
   if (errCheckUser) throw errCheckUser;
   if (isEmpty(checkUser) || checkUser.status !== AccountStatus.ACTIVE) {
@@ -100,7 +97,7 @@ const handleUpdateProperty = async (params) => {
   //Update
   // eslint-disable-next-line no-unused-vars
   let [listUpdatedProperty, errNewProperty] = await handle(
-    Property.update(paramsUpdateProperty, queryUpdateProperty),
+    PropertyRepository.updateProperty(paramsUpdateProperty,queryUpdateProperty)
   );
   if (errNewProperty) throw errNewProperty;
 
