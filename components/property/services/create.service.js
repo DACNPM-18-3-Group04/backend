@@ -65,8 +65,10 @@ const handleCreate = async (params) => {
   );
   if (errNewProperty) throw errNewProperty;
 
+  // console.log(newProperty);
+
   return {
-    id: newProperty.insertId,
+    id: newProperty.dataValues.id,
     ...paramsNewProperty,
   };
 };
