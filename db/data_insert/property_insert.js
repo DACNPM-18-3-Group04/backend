@@ -15,8 +15,10 @@ const districtIdMap = {
 };
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
 const insertImages = async (id = 0, images = []) => {
@@ -45,7 +47,7 @@ const insertPropertyRow = async (index = 0) => {
     description: data_row.mota.substring(0, 500), // Table size = 500
     price: data_row.giaban,
     area: data_row.dientich,
-    type: getRandomArbitrary(0, 2) === 0 ? 'S' : 'L',
+    type: getRandomInt(0, 2) === 0 ? 'S' : 'L',
   };
   const images = data_row.hinh_anh.split(',');
   try {
