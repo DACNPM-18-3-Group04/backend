@@ -8,6 +8,9 @@
 var app = require('../app');
 var debug = require('debug')('propbook-service:server');
 var http = require('http');
+const graphqlServer = require('../graphql');
+const indexRouter = require('../routes/index.route');
+const apiConfig = require('../configs/default.config').api;
 
 /**
  * Get port from environment and store in Express.
@@ -20,15 +23,25 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var httpServer = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+// start graphql server with express app as middleware
+httpServer.on('error', onError);
+httpServer.on('listening', onListening);
+const server = graphqlServer(httpServer);
+server.start().then(() => {
+  server.applyMiddleware({ app, path: `/api/${apiConfig.version}/graphql` });
+  app.use('/', indexRouter);
+
+  console.log(
+    `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`,
+  );
+  httpServer.listen(port);
+});
 
 /**
  * Normalize a port into a number, string, or false.
@@ -51,7 +64,7 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Event listener for HTTP httpServer "error" event.
  */
 
 function onError(error) {
@@ -59,9 +72,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -79,14 +90,12 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Event listener for HTTP httpServer "listening" event.
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  var addr = httpServer.address();
+  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log('Server started. Listening on ' + bind);
+  // console.log('Server started. Listening on ' + bind);
 }

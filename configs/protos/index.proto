@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+import "authService.proto";
+import "locationService.proto";
+
+package aggregator;
+
+message None {}

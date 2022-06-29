@@ -17,7 +17,7 @@ db.authenticate()
   .catch((err) => console.log('Database connection error: ', err));
 
 const ErrorMdw = require('./components/errors/error.middleware');
-const indexRouter = require('./routes/index.route');
+// const indexRouter = require('./routes/index.route');
 
 const app = express();
 
@@ -30,6 +30,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(ErrorMdw.handleBadJSONParseError);
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 
 module.exports = app;

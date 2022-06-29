@@ -6,10 +6,11 @@ const PROTO_PATH = './configs/protos/authService.proto';
 const { auth_mservice: Auth } = require('../../../../configs/default.config');
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, protoLoaderOptions);
-const { AuthService } = grpc.loadPackageDefinition(packageDefinition);
+// AuthService in package auth
+const { AuthService } = grpc.loadPackageDefinition(packageDefinition).auth;
 
 const AuthMServiceClient = new AuthService(
-  Auth.host,
+  Auth.grpc_host,
   grpc.credentials.createInsecure(),
   // grpc.credentials.createSsl(),
   {
